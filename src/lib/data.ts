@@ -5,12 +5,12 @@ import path from "path";
 // Data service: replace internals of these functions to connect to your real source
 // e.g., database queries, REST calls, or file parsers.
 
-// Temporary in-memory seed for 5H-AAF (until real data source is connected)
+// Temporary in-memory seed for 5H-ACA (until real data source is connected)
 const seedDate = new Date().toISOString().slice(0,10);
 const seededAircraft: Aircraft[] = [
   {
-    id: "ac-AAF",
-    registration: "5H-AAF",
+    id: "ac-ACA",
+    registration: "5H-ACA",
     type: "C208B",
     msn: "TBD",
     status: "In Service",
@@ -44,7 +44,7 @@ let lastCacheLoad = 0;
 
 async function loadCacheIfAvailable() {
   try {
-    const cachePath = path.join(process.cwd(), "public", "aaf-cache.json");
+    const cachePath = path.join(process.cwd(), "public", "aca-cache.json");
     
     if (fs.existsSync(cachePath)) {
       const stats = fs.statSync(cachePath);

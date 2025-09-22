@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { Component } from "@/lib/types";
 
-const CACHE_PATH = path.join(process.cwd(), "public", "aaf-cache.json");
+const CACHE_PATH = path.join(process.cwd(), "public", "aca-cache.json");
 
 // GET all components
 export async function GET() {

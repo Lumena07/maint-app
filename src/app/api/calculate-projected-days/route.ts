@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { Aircraft, MaintenanceTask, Component } from "@/lib/types";
 
-const CACHE_PATH = path.join(process.cwd(), "public", "aaf-cache.json");
+const CACHE_PATH = path.join(process.cwd(), "public", "aca-cache.json");
 
 // Function to calculate projected days for a single item
 const calculateItemProjectedDays = (item: MaintenanceTask | Component, aircraft: Aircraft): number => {

@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     const { aircraftId, updates } = await request.json();
     
     // Read the current cache file
-    const cachePath = path.join(process.cwd(), "public", "aaf-cache.json");
+    const cachePath = path.join(process.cwd(), "public", "aca-cache.json");
     
     if (!fs.existsSync(cachePath)) {
       return NextResponse.json({ error: "Cache file not found" }, { status: 404 });

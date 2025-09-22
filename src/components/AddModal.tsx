@@ -11,7 +11,7 @@ type AddModalProps = {
 
 export const AddModal = ({ isOpen, onClose, type, onSave }: AddModalProps) => {
   const [formData, setFormData] = useState<any>({
-    aircraftId: "ac-AAF",
+    aircraftId: "ac-ACA",
     aircraftType: "C208B",
     dueUnits: ["HOURS"]
   });
@@ -23,7 +23,7 @@ export const AddModal = ({ isOpen, onClose, type, onSave }: AddModalProps) => {
     onSave(formData);
     onClose();
     setFormData({
-      aircraftId: "ac-AAF",
+      aircraftId: "ac-ACA",
       aircraftType: "C208B",
       dueUnits: ["HOURS"]
     });

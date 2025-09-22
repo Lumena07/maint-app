@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { Snag } from '@/lib/types';
 
-const CACHE_FILE = join(process.cwd(), 'public', 'aaf-cache.json');
+const CACHE_FILE = join(process.cwd(), 'public', 'aca-cache.json');
 
 const readCache = (): any => {
   try {

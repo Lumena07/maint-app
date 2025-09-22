@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { Aircraft, Assembly, FlightLog } from "@/lib/types";
 
-const CACHE_PATH = path.join(process.cwd(), "public", "aaf-cache.json");
+const CACHE_PATH = path.join(process.cwd(), "public", "aca-cache.json");
 
 // GET endpoint to retrieve flight logs and related data
 export async function GET(request: NextRequest) {
