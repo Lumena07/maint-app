@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Aircraft, MaintenanceTask, Component } from "@/lib/types";
 import { EditModal } from "./EditModal";
 import { AddModal } from "./AddModal";
+import { refreshCache } from "@/lib/data";
 
 type TasksComponentsTableProps = {
   aircraft: Aircraft;
@@ -423,7 +424,8 @@ export const TasksComponentsTable = ({ aircraft, tasks, components }: TasksCompo
         });
         
         if (response.ok) {
-          // Refresh the page to show updated data
+          // Refresh the cache and reload the page to show updated data
+          await refreshCache();
           window.location.reload();
         } else {
           alert("Failed to delete item");
@@ -455,7 +457,8 @@ export const TasksComponentsTable = ({ aircraft, tasks, components }: TasksCompo
           body: JSON.stringify({ aircraftId: aircraft.id }),
         });
         
-        // Refresh the page to show updated data
+        // Refresh the cache and reload the page to show updated data
+        await refreshCache();
         window.location.reload();
       } else {
         alert("Failed to save changes");

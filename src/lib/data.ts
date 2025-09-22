@@ -43,6 +43,12 @@ let cacheTasks: MaintenanceTask[] = [];
 let cacheComponents: Component[] = [];
 let lastCacheLoad = 0;
 
+// Function to force cache refresh
+export async function refreshCache(): Promise<void> {
+  lastCacheLoad = 0; // Reset cache load time to force refresh
+  await loadCacheIfAvailable();
+}
+
 async function loadCacheIfAvailable() {
   try {
     const now = Date.now();
@@ -64,7 +70,7 @@ async function loadCacheIfAvailable() {
         lastCacheLoad = now;
         
         const timestamp = new Date().toLocaleTimeString();
-        console.log(`✅ Cache reloaded from Blob at ${timestamp}: ${cacheAircraft.length} aircraft`);
+        console.log(`✅ Cache reloaded from Blob at ${timestamp}: ${cacheAircraft.length} aircraft, ${cacheTasks.length} tasks, ${cacheComponents.length} components`);
         if (cacheAircraft.length > 0) {
           console.log("Current aircraft data:", cacheAircraft[0]);
           console.log("Raw currentCyc value:", cacheAircraft[0].currentCyc);

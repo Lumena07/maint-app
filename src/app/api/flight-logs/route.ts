@@ -178,19 +178,19 @@ export async function POST(request: NextRequest) {
       currentHoursToCheck -= parseFloat(blockHrs);
     }
     
-    // Final values
-    const cumulativeHrs = currentAircraftHrs;
+    // Final values - round to 1 decimal place to avoid floating-point precision issues
+    const cumulativeHrs = Math.round(currentAircraftHrs * 10) / 10;
     const cumulativeCyc = currentAircraftCyc;
-    const engineTSN = currentEngineTSN;
+    const engineTSN = Math.round(currentEngineTSN * 10) / 10;
     const engineCSN = currentEngineCSN;
     const engineTSO = currentEngineTSO;
     const engineCSO = currentEngineCSO;
-    const engineOH = currentEngineOH;
-    const propTSN = currentPropTSN;
-    const propTSO = currentPropTSO;
-    const propOH = currentPropOH;
-    const cofaHours = currentCofAHours;
-    const calculatedHoursToCheck = currentHoursToCheck;
+    const engineOH = Math.round(currentEngineOH * 10) / 10;
+    const propTSN = Math.round(currentPropTSN * 10) / 10;
+    const propTSO = Math.round(currentPropTSO * 10) / 10;
+    const propOH = Math.round(currentPropOH * 10) / 10;
+    const cofaHours = Math.round(currentCofAHours * 10) / 10;
+    const calculatedHoursToCheck = Math.round(currentHoursToCheck * 10) / 10;
 
     // Create new flight log entry with calculated values
     const flightLog: FlightLog = {
