@@ -95,6 +95,16 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
       if (tasksResponse.ok) {
         const allTasks = await tasksResponse.json();
         console.log(`refreshData - Received ${allTasks.length} total tasks from API`);
+        
+        // Find the specific task we just updated
+        const updatedTask = allTasks.find((t: MaintenanceTask) => t.id === 'task-C208-68-inspection-doc-17');
+        if (updatedTask) {
+          console.log('refreshData - Found updated task:', updatedTask);
+          console.log('refreshData - Updated task lastDoneHrs:', updatedTask.lastDoneHrs);
+        } else {
+          console.log('refreshData - Updated task not found in API response');
+        }
+        
         if (allTasks.length > 0) {
           console.log('refreshData - First task from API:', allTasks[0]);
         }
@@ -103,6 +113,16 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
           t.aircraftType === aircraft.type || t.tailSpecificId === aircraft.id
         );
         console.log(`refreshData - Filtered to ${aircraftTasks.length} tasks for aircraft ${aircraft.registration}`);
+        
+        // Check if our updated task is in the filtered results
+        const filteredUpdatedTask = aircraftTasks.find((t: MaintenanceTask) => t.id === 'task-C208-68-inspection-doc-17');
+        if (filteredUpdatedTask) {
+          console.log('refreshData - Updated task in filtered results:', filteredUpdatedTask);
+          console.log('refreshData - Filtered task lastDoneHrs:', filteredUpdatedTask.lastDoneHrs);
+        } else {
+          console.log('refreshData - Updated task not in filtered results');
+        }
+        
         setTasks(aircraftTasks);
       } else {
         console.error('refreshData - Failed to fetch tasks:', tasksResponse.status);
