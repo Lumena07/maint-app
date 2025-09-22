@@ -5,6 +5,7 @@ import { Aircraft, Assembly, FlightLog } from "@/lib/types";
 type HoursTrackingProps = {
   aircraft: Aircraft;
   assemblies: Assembly[];
+  onAircraftUpdate?: (updatedAircraft: Aircraft) => void;
 };
 
 type FlightLogEntry = {
@@ -32,10 +33,23 @@ type CheckExtension = {
   reference?: string;
 };
 
-export const HoursTracking = ({ aircraft, assemblies }: HoursTrackingProps) => {
+export const HoursTracking = ({ aircraft, assemblies, onAircraftUpdate }: HoursTrackingProps) => {
   const [flightLogs, setFlightLogs] = useState<FlightLog[]>([]);
   const [checkExtensions, setCheckExtensions] = useState<CheckExtension[]>([]);
   const [isAddingFlight, setIsAddingFlight] = useState(false);
+  
+  // State for notifications
+  const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  // Function to show notification
+  const showNotification = (type: 'success' | 'error', message: string) => {
+    setNotification({ type, message });
+    // Auto-hide after 3 seconds
+    setTimeout(() => {
+      setNotification(null);
+    }, 3000);
+  };
+
   const [newFlightEntry, setNewFlightEntry] = useState<FlightLogEntry>({
     date: new Date().toISOString().split('T')[0],
     blockHrs: 0,
@@ -87,6 +101,15 @@ export const HoursTracking = ({ aircraft, assemblies }: HoursTrackingProps) => {
       if (response.ok) {
         const result = await response.json();
         setFlightLogs(prev => [...prev, result.flightLog]);
+        
+        // Show success notification
+        showNotification('success', 'Flight hours added successfully!');
+        
+        // Update aircraft data if callback provided
+        if (onAircraftUpdate && result.updatedAircraft) {
+          onAircraftUpdate(result.updatedAircraft);
+        }
+        
         setNewFlightEntry({
           date: new Date().toISOString().split('T')[0],
           blockHrs: 0,
@@ -104,13 +127,16 @@ export const HoursTracking = ({ aircraft, assemblies }: HoursTrackingProps) => {
         });
         setSelectedType('regular');
         setIsAddingFlight(false);
-        // Refresh page to update aircraft hours and totals
-        window.location.reload();
+        
+        // Only reload if no callback provided (fallback)
+        if (!onAircraftUpdate) {
+          window.location.reload();
+        }
       } else {
-        alert("Failed to add flight log entry");
+        showNotification('error', 'Failed to add flight hours');
       }
     } catch (_error) {
-      alert("Error adding flight log entry");
+      showNotification('error', 'Error adding flight hours');
     }
   };
 
@@ -230,6 +256,28 @@ export const HoursTracking = ({ aircraft, assemblies }: HoursTrackingProps) => {
 
   return (
     <div className="space-y-6">
+      {/* Notification */}
+      {notification && (
+        <div className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-md shadow-lg transition-all duration-300 ${
+          notification.type === 'success' 
+            ? 'bg-green-100 border border-green-400 text-green-700' 
+            : 'bg-red-100 border border-red-400 text-red-700'
+        }`}>
+          <div className="flex items-center">
+            <span className="font-medium">
+              {notification.type === 'success' ? '✅' : '❌'}
+            </span>
+            <span className="ml-2">{notification.message}</span>
+            <button
+              onClick={() => setNotification(null)}
+              className="ml-3 text-gray-500 hover:text-gray-700"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+      
       {/* Current Hours Summary */}
       <div className="rounded border border-gray-200 bg-white p-4">
         <h3 className="text-lg font-semibold mb-4">Current Hours & Cycles</h3>

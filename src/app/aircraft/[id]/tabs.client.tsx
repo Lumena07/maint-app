@@ -25,6 +25,18 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
   const [assemblies, setAssemblies] = useState<Assembly[]>([]);
   const [compliance, setCompliance] = useState<ComplianceRecord[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // State for aircraft data (can be updated when hours are added)
+  const [currentAircraft, setCurrentAircraft] = useState<Aircraft>(aircraft);
+
+  // Function to handle aircraft updates (e.g., when hours are added)
+  const handleAircraftUpdate = (updatedAircraft: Aircraft) => {
+    setCurrentAircraft(updatedAircraft);
+    // Also call the parent callback if provided
+    if (onAircraftUpdate) {
+      onAircraftUpdate(updatedAircraft);
+    }
+  };
 
   // Load data from API endpoints
   useEffect(() => {
@@ -173,7 +185,7 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
         {activeTab === "tasks-components" && (
           <div id="tabpanel-tasks-components" role="tabpanel" aria-labelledby="tab-tasks-components">
             <TasksComponentsTable 
-              aircraft={aircraft} 
+              aircraft={currentAircraft} 
               tasks={tasks} 
               components={components}
               onDataUpdate={refreshData}
@@ -183,7 +195,11 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
 
         {activeTab === "hours" && (
           <div id="tabpanel-hours" role="tabpanel" aria-labelledby="tab-hours">
-            <HoursTracking aircraft={aircraft} assemblies={assemblies} />
+            <HoursTracking 
+              aircraft={currentAircraft} 
+              assemblies={assemblies} 
+              onAircraftUpdate={handleAircraftUpdate}
+            />
           </div>
         )}
 
@@ -191,14 +207,14 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
           <div id="tabpanel-projections" role="tabpanel" aria-labelledby="tab-projections">
             <div className="rounded border border-gray-200 bg-white p-4">
               <h2 className="mb-3 text-lg font-semibold">Projections 30/60/90</h2>
-              <Projections aircraft={aircraft} tasks={tasks} components={components} />
+              <Projections aircraft={currentAircraft} tasks={tasks} components={components} />
             </div>
           </div>
         )}
 
         {activeTab === "aircraft-details" && (
           <div id="tabpanel-aircraft-details" role="tabpanel" aria-labelledby="tab-aircraft-details">
-            <AircraftDetails aircraft={aircraft} onAircraftUpdate={onAircraftUpdate} />
+            <AircraftDetails aircraft={currentAircraft} onAircraftUpdate={handleAircraftUpdate} />
           </div>
         )}
       </div>

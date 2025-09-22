@@ -334,7 +334,19 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<MaintenanceTask | Component | null>(null);
   const [editingType, setEditingType] = useState<"Task" | "Component">("Task");
+  
+  // State for notifications
+  const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [addType, setAddType] = useState<"Task" | "Component">("Task");
+
+  // Function to show notification
+  const showNotification = (type: 'success' | 'error', message: string) => {
+    setNotification({ type, message });
+    // Auto-hide after 3 seconds
+    setTimeout(() => {
+      setNotification(null);
+    }, 3000);
+  };
 
   // Ensure components is an array, default to empty array if undefined
   const safeComponents = components || [];
@@ -425,6 +437,9 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
         });
         
         if (response.ok) {
+          // Show success notification
+          showNotification('success', `${type} deleted successfully!`);
+          
           // Refresh the data
           if (onDataUpdate) {
             onDataUpdate();
@@ -433,10 +448,10 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
             window.location.reload();
           }
         } else {
-          alert("Failed to delete item");
+          showNotification('error', `Failed to delete ${type.toLowerCase()}`);
         }
       } catch (_error) {
-        alert("Error deleting item");
+        showNotification('error', `Error deleting ${type.toLowerCase()}`);
       }
     }
   };
@@ -462,6 +477,9 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
           body: JSON.stringify({ aircraftId: aircraft.id }),
         });
         
+        // Show success notification
+        showNotification('success', `${editingType} saved successfully!`);
+        
         // Refresh the data
         if (onDataUpdate) {
           onDataUpdate();
@@ -470,10 +488,10 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
           window.location.reload();
         }
       } else {
-        alert("Failed to save changes");
+        showNotification('error', `Failed to save ${editingType.toLowerCase()}`);
       }
     } catch (_error) {
-      alert("Error saving changes");
+      showNotification('error', `Error saving ${editingType.toLowerCase()}`);
     }
   };
 
@@ -498,13 +516,16 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
           body: JSON.stringify({ aircraftId: aircraft.id }),
         });
         
+        // Show success notification
+        showNotification('success', `${addType} added successfully!`);
+        
         // Refresh the page to show updated data
         window.location.reload();
       } else {
-        alert("Failed to add item");
+        showNotification('error', `Failed to add ${addType.toLowerCase()}`);
       }
     } catch (_error) {
-      alert("Error adding item");
+      showNotification('error', `Error adding ${addType.toLowerCase()}`);
     }
   };
 
@@ -518,6 +539,28 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
 
   return (
     <div className="rounded border border-gray-200 bg-white overflow-hidden">
+      {/* Notification */}
+      {notification && (
+        <div className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-md shadow-lg transition-all duration-300 ${
+          notification.type === 'success' 
+            ? 'bg-green-100 border border-green-400 text-green-700' 
+            : 'bg-red-100 border border-red-400 text-red-700'
+        }`}>
+          <div className="flex items-center">
+            <span className="font-medium">
+              {notification.type === 'success' ? '✅' : '❌'}
+            </span>
+            <span className="ml-2">{notification.message}</span>
+            <button
+              onClick={() => setNotification(null)}
+              className="ml-3 text-gray-500 hover:text-gray-700"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+      
       {/* Aircraft Current Status Header */}
       <div className="bg-blue-50 px-4 py-3 border-b border-gray-200">
         <div className="flex justify-between items-center">
