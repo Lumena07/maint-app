@@ -16,6 +16,49 @@ export const MainDashboardTabs = ({ aircraft }: MainDashboardTabsProps) => {
   const [snags, setSnags] = useState<Snag[]>([]);
   const [adsbRecords, setAdsbRecords] = useState<ADSB[]>([]);
   const [addRecords, setAddRecords] = useState<ADD[]>([]);
+  const [monthlyHours, setMonthlyHours] = useState<{[key: string]: number}>({});
+  
+  // Function to calculate monthly hours for each aircraft
+  const calculateMonthlyHours = async () => {
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    const hoursMap: {[key: string]: number} = {};
+    
+    for (const ac of aircraft) {
+      try {
+        const response = await fetch(`/api/flight-logs?aircraftId=${ac.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          const flightLogs = data.flightLogs || [];
+          
+          // Filter flight logs for current month
+          const currentMonthLogs = flightLogs.filter((log: any) => {
+            const logDate = new Date(log.date);
+            return logDate.getMonth() === currentMonth && logDate.getFullYear() === currentYear;
+          });
+          
+          // Sum up the hours for this month
+          const totalHours = currentMonthLogs.reduce((sum: number, log: any) => sum + (log.blockHrs || 0), 0);
+          hoursMap[ac.id] = totalHours;
+        } else {
+          hoursMap[ac.id] = 0;
+        }
+      } catch (error) {
+        console.error(`Error fetching flight logs for ${ac.registration}:`, error);
+        hoursMap[ac.id] = 0;
+      }
+    }
+    
+    setMonthlyHours(hoursMap);
+  };
+  
+  // Load monthly hours on component mount and when activeTab changes to flying-hours
+  useEffect(() => {
+    if (activeTab === "flying-hours") {
+      calculateMonthlyHours();
+    }
+  }, [aircraft, activeTab]);
+  
   const [isSnagModalOpen, setIsSnagModalOpen] = useState(false);
   const [isAdsbModalOpen, setIsAdsbModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -1123,6 +1166,12 @@ export const MainDashboardTabs = ({ aircraft }: MainDashboardTabsProps) => {
                   <option>February 2025</option>
                   <option>March 2025</option>
                 </select>
+                <button 
+                  onClick={calculateMonthlyHours}
+                  className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+                >
+                  Refresh
+                </button>
                 <button className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
                   Export Report
                 </button>
@@ -1142,7 +1191,7 @@ export const MainDashboardTabs = ({ aircraft }: MainDashboardTabsProps) => {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-sm text-gray-600">This Month:</span>
-                      <span className="font-medium">{(ac.avgDailyHrs * 30).toFixed(1)}h</span>
+                      <span className="font-medium">{(monthlyHours[ac.id] || 0).toFixed(1)}h</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-sm text-gray-600">Avg Daily:</span>
