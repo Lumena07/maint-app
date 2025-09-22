@@ -6,6 +6,9 @@ export interface CacheData {
   tasks: any[];
   snags: any[];
   flightLogs: any[];
+  assemblies: any[];
+  cofaResets?: any[];
+  checkExtensions?: any[];
   lastUpdated: string;
 }
 
@@ -71,6 +74,9 @@ export async function initializeCache(): Promise<CacheData> {
     tasks: [],
     snags: [],
     flightLogs: [],
+    assemblies: [],
+    cofaResets: [],
+    checkExtensions: [],
     lastUpdated: new Date().toISOString()
   };
 
