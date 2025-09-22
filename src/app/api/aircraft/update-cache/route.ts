@@ -1,21 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { Aircraft } from "@/lib/types";
+import { readCache, writeCache } from "@/lib/kv";
 
 export async function POST(request: NextRequest) {
   try {
     const { aircraftId, updates } = await request.json();
     
-    // Read the current cache file
-    const cachePath = path.join(process.cwd(), "public", "aca-cache.json");
-    
-    if (!fs.existsSync(cachePath)) {
-      return NextResponse.json({ error: "Cache file not found" }, { status: 404 });
+    // Read the current cache data
+    const cacheData = await readCache();
+    if (!cacheData) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
     }
-    
-    const rawData = fs.readFileSync(cachePath, "utf8");
-    const cacheData = JSON.parse(rawData);
     
     // Find and update the aircraft
     const aircraftIndex = cacheData.aircraft.findIndex((ac: Aircraft) => ac.id === aircraftId);
@@ -30,8 +25,11 @@ export async function POST(request: NextRequest) {
       ...updates
     };
     
-    // Write the updated data back to the cache file
-    fs.writeFileSync(cachePath, JSON.stringify(cacheData, null, 2));
+    // Write the updated data back to the blob
+    const success = await writeCache(cacheData);
+    if (!success) {
+      return NextResponse.json({ error: "Failed to save updated data" }, { status: 500 });
+    }
     
     return NextResponse.json(cacheData.aircraft[aircraftIndex]);
   } catch (error) {

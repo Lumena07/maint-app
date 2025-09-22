@@ -1,16 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { Component } from "@/lib/types";
-
-const CACHE_PATH = path.join(process.cwd(), "public", "aca-cache.json");
+import { readCache, updateCacheSection } from "@/lib/kv";
 
 // GET all components
 export async function GET() {
   try {
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
-    return NextResponse.json(data.components || []);
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
+    return NextResponse.json(cache.components || []);
   } catch (_error) {
     return NextResponse.json({ error: "Failed to read components" }, { status: 500 });
   }
@@ -27,15 +26,18 @@ export async function POST(request: NextRequest) {
     }
     
     // Read current data
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
     
     // Add new component
-    data.components = data.components || [];
-    data.components.push(newComponent);
+    const updatedComponents = [...(cache.components || []), newComponent];
+    const success = await updateCacheSection('components', updatedComponents);
     
-    // Write back to file
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(data, null, 2));
+    if (!success) {
+      return NextResponse.json({ error: "Failed to save component" }, { status: 500 });
+    }
     
     return NextResponse.json(newComponent);
   } catch (_error) {
@@ -49,20 +51,24 @@ export async function PUT(request: NextRequest) {
     const updatedComponent: Component = await request.json();
     
     // Read current data
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
     
     // Update component
-    data.components = data.components || [];
-    const index = data.components.findIndex((c: Component) => c.id === updatedComponent.id);
+    const components = cache.components || [];
+    const index = components.findIndex((c: Component) => c.id === updatedComponent.id);
     if (index !== -1) {
-      data.components[index] = updatedComponent;
+      components[index] = updatedComponent;
+      const success = await updateCacheSection('components', components);
+      
+      if (!success) {
+        return NextResponse.json({ error: "Failed to save component" }, { status: 500 });
+      }
     } else {
       return NextResponse.json({ error: "Component not found" }, { status: 404 });
     }
-    
-    // Write back to file
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(data, null, 2));
     
     return NextResponse.json(updatedComponent);
   } catch (_error) {
@@ -81,15 +87,19 @@ export async function DELETE(request: NextRequest) {
     }
     
     // Read current data
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
     
     // Remove component
-    data.components = data.components || [];
-    data.components = data.components.filter((c: Component) => c.id !== componentId);
+    const components = cache.components || [];
+    const filteredComponents = components.filter((c: Component) => c.id !== componentId);
+    const success = await updateCacheSection('components', filteredComponents);
     
-    // Write back to file
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(data, null, 2));
+    if (!success) {
+      return NextResponse.json({ error: "Failed to delete component" }, { status: 500 });
+    }
     
     return NextResponse.json({ success: true });
   } catch (_error) {

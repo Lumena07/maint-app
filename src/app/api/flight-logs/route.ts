@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { Aircraft, Assembly, FlightLog } from "@/lib/types";
-
-const CACHE_PATH = path.join(process.cwd(), "public", "aca-cache.json");
+import { readCache, writeCache } from "@/lib/kv";
 
 // GET endpoint to retrieve flight logs and related data
 export async function GET(request: NextRequest) {
@@ -16,8 +13,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Read current data
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
+    const data = await readCache();
+    if (!data) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
 
     // Get flight logs for this aircraft
     const flightLogs = data.flightLogs?.filter((log: FlightLog) => log.aircraftId === aircraftId) || [];
@@ -50,8 +49,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Read current data
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
+    const data = await readCache();
+    if (!data) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
 
     // Find the aircraft
     const aircraft = data.aircraft?.find((a: Aircraft) => a.id === aircraftId);
@@ -249,8 +250,11 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    // Write back to file
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(data, null, 2));
+    // Write back to blob
+    const success = await writeCache(data);
+    if (!success) {
+      return NextResponse.json({ error: "Failed to save updated data" }, { status: 500 });
+    }
 
     return NextResponse.json({
       success: true,

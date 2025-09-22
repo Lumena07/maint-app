@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { Aircraft, MaintenanceTask, Component } from "@/lib/types";
-
-const CACHE_PATH = path.join(process.cwd(), "public", "aca-cache.json");
+import { readCache, writeCache } from "@/lib/kv";
 
 // Function to calculate projected days for a single item
 const calculateItemProjectedDays = (item: MaintenanceTask | Component, aircraft: Aircraft): number => {
@@ -81,8 +78,10 @@ export async function POST(request: NextRequest) {
     }
     
     // Read current data
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
+    const data = await readCache();
+    if (!data) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
     
     // Find the aircraft
     const aircraft = data.aircraft?.find((a: Aircraft) => a.id === aircraftId);
@@ -117,8 +116,11 @@ export async function POST(request: NextRequest) {
       return updated || component;
     }) || [];
     
-    // Write back to file
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(data, null, 2));
+    // Write back to blob
+    const success = await writeCache(data);
+    if (!success) {
+      return NextResponse.json({ error: "Failed to save updated data" }, { status: 500 });
+    }
     
     return NextResponse.json({ 
       success: true, 
