@@ -1,0 +1,2188 @@
+{
+  "aircraft": [
+    {
+      "id": "ac-AAF",
+      "registration": "5H-AAF",
+      "type": "C208B",
+      "msn": "208B-1234",
+      "status": "In Service",
+      "base": "HKJK",
+      "deliveryDate": "2018-06-01",
+      "inServiceDate": "2018-07-01",
+      "currentHrs": 12217.499999999996,
+      "currentCyc": 15627,
+      "currentDate": "2025-09-19",
+      "avgDailyHrs": 7,
+      "avgDailyCyc": 6,
+      "engineTSN": 2451.400000000001,
+      "engineCSN": 3639,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 5097.5,
+      "propTSO": 2335.3,
+      "propTSN": 11360.699999999997,
+      "propOH": 3000,
+      "EngineTBO": 5100,
+      "PropTBO": 3000,
+      "CofA_Hours": 0,
+      "hoursToCheck": 209.9,
+      "yearOfManufacture": 1954,
+      "serialNumber": "208B-5943",
+      "manufacturer": "CESSNA",
+      "engineNumber": "PT64-A",
+      "propellerNumber": "PW123Q",
+      "lastCofA": "2024-08-21",
+      "lastCofANextDue": "2025-08-20",
+      "lastWandB": "2020-04-19",
+      "lastWandBNextDue": "2025-04-18",
+      "navdataBaseLastDone": "2025-09-01",
+      "navdataBaseNextDue": "2025-10-01",
+      "fakLastDone": "2025-08-15",
+      "fakNextDue": "2026-08-15",
+      "survivalKitLastDone": "2025-07-20",
+      "survivalKitNextDue": "2026-07-20",
+      "groundingStatus": {
+        "isGrounded": false,
+        "currentRecord": {
+          "id": "mfqsh8qea14hv0pk4",
+          "aircraftId": "ac-AAF",
+          "isGrounded": false,
+          "groundingDate": "2025-09-19",
+          "reason": "Maintenance",
+          "description": "200hr check",
+          "planOfAction": "Maintaining",
+          "sparePartsRequired": false,
+          "spareStatus": "Not Required",
+          "spareOrderDate": "",
+          "spareExpectedDate": "",
+          "estimatedUngroundingDate": "2025-09-19",
+          "daysOnGround": 0,
+          "createdAt": "2025-09-19T12:01:38.362Z",
+          "updatedAt": "2025-09-19T12:01:44.567Z",
+          "ungroundingDate": "2025-09-19"
+        },
+        "totalDaysGrounded": 0,
+        "lastGroundedDate": "2025-09-19",
+        "lastUngroundedDate": "2025-09-19"
+      },
+      "fireExtinguisherLastDone": "2025-09-19",
+      "fireExtinguisherNextDue": "2026-09-18",
+      "standbyCompassLastDone": "2025-09-18",
+      "standbyCompassNextDue": "2026-09-17",
+      "cofaExtensionDate": "2025-09-19",
+      "cofaExtensionDays": 3
+    }
+  ],
+  "assemblies": [
+    {
+      "id": "eng-AAF-1",
+      "aircraftId": "ac-AAF",
+      "type": "Engine",
+      "position": "C",
+      "model": "PT6A-140",
+      "serial": "5102",
+      "tsnHrs": 12217.499999999996,
+      "csn": 15627,
+      "registration": "5H-AAF",
+      "partNumber": "PT6A-140",
+      "manufacturer": "Pratt & Whitney Canada"
+    },
+    {
+      "id": "prop-AAF-1",
+      "aircraftId": "ac-AAF",
+      "type": "Propeller",
+      "position": "C",
+      "model": "HC-B3TN-3F",
+      "serial": "BUA33215",
+      "tsnHrs": 12217.499999999996,
+      "csn": 15627,
+      "registration": "5H-AAF",
+      "partNumber": "HC-B3TN-3F",
+      "manufacturer": "Hartzell"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-C208-07-borescope",
+      "title": "Borescope Inspection (EMM 72-00-00 Pg 620-629)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 400,
+      "repeatIntervalHrs": 400,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "EMM 72-00-00 Pg 620-629",
+      "sourceDoc": "c208Template.item07",
+      "projectedDays": 37.90000000000042
+    },
+    {
+      "id": "task-C208-29-engine-oil-filter",
+      "title": "Filter Element, Engine Oil (EMM 72-00-00, Table 601)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 1000,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2025-03-21",
+      "lastDoneHrs": 11671.4,
+      "reference": "EMM 72-00-00 Table 601",
+      "sourceDoc": "c208Template.item29",
+      "projectedDays": 64.84285714285761
+    },
+    {
+      "id": "task-C208-03-battery-capacity-concorde",
+      "title": "Battery Capacity Check - Concorde (CMM 24-30-71)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 800,
+      "initialIntervalDays": 365,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2024-09-28",
+      "lastDoneHrs": 11671.4,
+      "reference": "Concorde CMM 24-30-71",
+      "sourceDoc": "c208Template.item03",
+      "repeatIntervalHrs": 800,
+      "repeatIntervalDays": 363,
+      "projectedDays": 7
+    },
+    {
+      "id": "task-C208-05-battery-capacity-hawker",
+      "title": "Battery Capacity Check - Hawker 9750W0538 (CMM 24-32-35)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "pn": "9750W0538",
+      "initialIntervalHrs": 1500,
+      "initialIntervalDays": 550,
+      "repeatIntervalHrs": 1000,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "reference": "Hawker CMM 24-32-35",
+      "sourceDoc": "c208Template.item05",
+      "projectedDays": 550
+    },
+    {
+      "id": "task-C208-08-cap-rear-spar-lower",
+      "title": "Cap, Rear Spar Lower (SID 57-20-03)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 20000,
+      "repeatIntervalHrs": 5000,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "SID 57-20-03",
+      "sourceDoc": "c208Template.item08",
+      "projectedDays": 1111.785714285715
+    },
+    {
+      "id": "task-C208-09-chip-detector-check",
+      "title": "Chip Detector Check (EMM 72-00-00)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 600,
+      "repeatIntervalHrs": 600,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "EMM 72-00-00",
+      "sourceDoc": "c208Template.item09",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-13-elt-battery-452-0133",
+      "title": "ELT Battery (452-0133)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "pn": "452-0133",
+      "lastDoneDate": "2023-03-18",
+      "reference": "MM 5-11-00, 2A (1)",
+      "sourceDoc": "c208Template.item13",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-14-engine-his",
+      "title": "Engine HIS",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 2000,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "SB1703, TCAA Letter TCAA/AI/CA/1.02/102",
+      "lastDoneDate": "2025-03-21",
+      "lastDoneHrs": 11671.4,
+      "sourceDoc": "c208Template.item14",
+      "projectedDays": 207.70000000000047
+    },
+    {
+      "id": "task-C208-14-engine-limits",
+      "title": "Engine Limits",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 5100,
+      "initialIntervalDays": 4380,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "reference": "SB1703, TCAA Letter TCAA/AI/CA/1.02/102",
+      "lastDoneDate": "2023-12-13",
+      "lastDoneHrs": 9766.1,
+      "sn": "PCE-VA0925",
+      "sourceDoc": "c208Template.item14",
+      "projectedDays": 378.37142857142913
+    },
+    {
+      "id": "task-C208-22-ct-blades-3076601-01",
+      "title": "CT Blades (3076601-01)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "pn": "3076601-01",
+      "reference": "AIRWORTHNESS P/N 30550000-01",
+      "sourceDoc": "c208Template.item22",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-28-engine-bleed-valve",
+      "title": "Engine Bleed Valve Check (EMM 72-00-00)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 600,
+      "repeatIntervalHrs": 600,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2024-07-10",
+      "lastDoneHrs": 11671.4,
+      "reference": "EMM 72-00-00",
+      "sourceDoc": "c208Template.item28",
+      "projectedDays": 7.700000000000467
+    },
+    {
+      "id": "task-C208-40-fuel-inlet-screen",
+      "title": "Fuel Inlet Screen Check (EMM 73-10-02)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 600,
+      "repeatIntervalHrs": 600,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "EMM 73-10-02",
+      "sourceDoc": "c208Template.item40",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-41-fuel-outlet-filter",
+      "title": "Fuel Outlet Filter Check (EMM 73-10-02)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 600,
+      "repeatIntervalHrs": 600,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "EMM 73-10-02",
+      "sourceDoc": "c208Template.item41",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-42-fuel-nozzle",
+      "title": "Fuel Nozzle Check (EMM 73-10-05)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 400,
+      "repeatIntervalHrs": 400,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "EMM 73-10-05 Pg 211-226",
+      "sourceDoc": "c208Template.item42",
+      "projectedDays": 37.90000000000042
+    },
+    {
+      "id": "task-C208-30-filter-p3-air",
+      "title": "Filter, P3 Air (EMM 72-00-00)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 1000,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2025-03-21",
+      "lastDoneHrs": 11671.4,
+      "reference": "EMM 72-00-00",
+      "sourceDoc": "c208Template.item30",
+      "projectedDays": 64.84285714285761
+    },
+    {
+      "id": "task-C208-31-filter-vacuum-relief",
+      "title": "Filter, Vacuum Relief (B3-5-1)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 400,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "Parker Haniffin S/Letter 59B",
+      "sourceDoc": "c208Template.item31",
+      "projectedDays": 37.90000000000042
+    },
+    {
+      "id": "task-C208-32-filter-vacuum-central",
+      "title": "Filter, Vacuum Central System (AAD 9-18-1)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 400,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "Parker Haniffin S/Letter 59B",
+      "sourceDoc": "c208Template.item32",
+      "projectedDays": 37.90000000000042
+    },
+    {
+      "id": "task-C208-33-fork-end-bolt",
+      "title": "Fork end to nose strut bolt (S2634027-3)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "pn": "S2634027-3",
+      "initialIntervalHrs": 600,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "MM 5-11-00",
+      "sourceDoc": "c208Template.item33",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-37-flap-bellcrank-2622311-16",
+      "title": "Flap Bellcrank (2622311-16)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "pn": "2622311-16",
+      "initialIntervalCyc": 40000,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "lastDoneDate": "2014-03-19",
+      "lastDoneCyc": 0,
+      "reference": "MM 5-11-00, 2B (5)",
+      "sourceDoc": "c208Template.item37",
+      "projectedDays": 4062.1666666666665
+    },
+    {
+      "id": "task-C208-38-flap-bellcrank-2622311-7",
+      "title": "Flap Bellcrank (2622311-7) Attaching hardware",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "pn": "2622311-7",
+      "initialIntervalCyc": 10000,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "lastDoneDate": "2022-11-19",
+      "lastDoneCyc": 10064,
+      "reference": "MM 5-11-00, 2B (6) & (7)",
+      "sourceDoc": "c208Template.item38",
+      "projectedDays": 739.5
+    },
+    {
+      "id": "task-C208-36-generator-3040760",
+      "title": "Generator (3040760)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "pn": "3040760",
+      "initialIntervalHrs": 5600,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "EMM 24-00-00",
+      "sourceDoc": "c208Template.item36",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-39-hydraulic-pump-3040760",
+      "title": "Hydraulic Pump (3040760)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "pn": "3040760",
+      "initialIntervalHrs": 5600,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "EMM 29-00-00",
+      "sourceDoc": "c208Template.item39",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-48-fuel-hoses-s2495",
+      "title": "Hoses, Fuel (Base # S2495)",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 1825,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "reference": "5-11-00, K (2)",
+      "sourceDoc": "c208Template.item48",
+      "projectedDays": 1825
+    },
+    {
+      "id": "task-C208-49-pitot-static-hoses",
+      "title": "Hoses, Pitot Static",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 3650,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "lastDoneDate": "2024-03-19",
+      "reference": "MM 5-11-00, 2E, (1)",
+      "sourceDoc": "c208Template.item49",
+      "projectedDays": 3101
+    },
+    {
+      "id": "task-C208-50-vacuum-hoses",
+      "title": "Hoses, Vacuum",
+      "type": "Inspection",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 3650,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "lastDoneDate": "2014-03-19",
+      "reference": "MM 5-11-00, 2G (1)",
+      "sourceDoc": "c208Template.item50",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-51-inspection-doc-0a",
+      "title": "Inspection Document 0A (ID 5-15-0A)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 365,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "reference": "ID 5-15-0A",
+      "sourceDoc": "c208Template.item51",
+      "projectedDays": 365
+    },
+    {
+      "id": "task-C208-52-inspection-doc-01",
+      "title": "Inspection Document 01 (ID 5-15-01)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 365,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "reference": "ID 5-15-01",
+      "sourceDoc": "c208Template.item52",
+      "projectedDays": 329
+    },
+    {
+      "id": "task-C208-53-inspection-doc-02",
+      "title": "Inspection Document 02",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 730,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "reference": "ID 5-15-02",
+      "sourceDoc": "c208Template.item53",
+      "projectedDays": 694
+    },
+    {
+      "id": "task-C208-54-inspection-doc-03",
+      "title": "Inspection Document 03 (5-15-03)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 1460,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "lastDoneDate": "2022-03-09",
+      "reference": "5-15-03",
+      "sourceDoc": "c208Template.item54",
+      "projectedDays": 170
+    },
+    {
+      "id": "task-C208-55-inspection-doc-04",
+      "title": "Inspection Document 04 (5-15-04)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 2190,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "lastDoneDate": "2020-08-22",
+      "reference": "5-15-04",
+      "sourceDoc": "c208Template.item55",
+      "projectedDays": 336
+    },
+    {
+      "id": "task-C208-56-inspection-doc-05",
+      "title": "Inspection Document 05 (5-15-05)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 4380,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "lastDoneDate": "2014-03-19",
+      "reference": "5-15-05",
+      "sourceDoc": "c208Template.item56",
+      "projectedDays": 178
+    },
+    {
+      "id": "task-C208-57-inspection-doc-06",
+      "title": "Inspection Document 06",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 200,
+      "initialIntervalDays": 365,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "ID 5-15-06",
+      "sourceDoc": "c208Template.item57",
+      "projectedDays": 9.328571428571845
+    },
+    {
+      "id": "task-C208-58-inspection-doc-07",
+      "title": "Inspection Document 07",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 400,
+      "initialIntervalDays": 365,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "ID 5-15-07",
+      "sourceDoc": "c208Template.item58",
+      "projectedDays": 37.90000000000042
+    },
+    {
+      "id": "task-C208-59-inspection-doc-08",
+      "title": "Inspection Document 08 (5-15-08)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 400,
+      "initialIntervalDays": 730,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "5-15-08",
+      "sourceDoc": "c208Template.item59",
+      "projectedDays": 37.90000000000042
+    },
+    {
+      "id": "task-C208-60-inspection-doc-09",
+      "title": "Inspection Document 09 (5-15-09)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 800,
+      "initialIntervalDays": 365,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "5-15-09",
+      "sourceDoc": "c208Template.item60",
+      "projectedDays": 95.04285714285756
+    },
+    {
+      "id": "task-C208-61-inspection-doc-10",
+      "title": "Inspection Document 10 (5-15-10)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 800,
+      "initialIntervalDays": 730,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "5-15-10",
+      "sourceDoc": "c208Template.item61",
+      "projectedDays": 95.04285714285756
+    },
+    {
+      "id": "task-C208-62-inspection-doc-11",
+      "title": "Inspection Document 11 (5-15-11)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 1600,
+      "initialIntervalDays": 730,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "5-15-11",
+      "sourceDoc": "c208Template.item62",
+      "projectedDays": 209.32857142857185
+    },
+    {
+      "id": "task-C208-63-inspection-doc-12",
+      "title": "Inspection Document 12 (5-15-12)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 1600,
+      "initialIntervalDays": 1825,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2024-09-28",
+      "lastDoneHrs": 10941.4,
+      "reference": "5-15-12",
+      "sourceDoc": "c208Template.item63",
+      "projectedDays": 46.27142857142904
+    },
+    {
+      "id": "task-C208-64-inspection-doc-13",
+      "title": "Inspection Document 13 (5-15-13)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 3200,
+      "initialIntervalDays": 1825,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2024-09-28",
+      "lastDoneHrs": 10941.4,
+      "reference": "5-15-13",
+      "sourceDoc": "c208Template.item64",
+      "projectedDays": 274.8428571428576
+    },
+    {
+      "id": "task-C208-65-inspection-doc-14",
+      "title": "Inspection Document 14 (5-15-14)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 3200,
+      "initialIntervalDays": 3650,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2024-09-28",
+      "lastDoneHrs": 10941.4,
+      "reference": "5-15-14",
+      "sourceDoc": "c208Template.item65",
+      "projectedDays": 274.8428571428576
+    },
+    {
+      "id": "task-C208-66-inspection-doc-15",
+      "title": "Inspection Document 15 (5-15-15)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 6400,
+      "initialIntervalDays": 3650,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2024-09-28",
+      "lastDoneHrs": 10941.4,
+      "reference": "5-15-15",
+      "sourceDoc": "c208Template.item66",
+      "projectedDays": 731.9857142857151
+    },
+    {
+      "id": "task-C208-67-inspection-doc-16",
+      "title": "Inspection Document 16 (5-15-16)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 6400,
+      "initialIntervalDays": 5475,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2024-09-28",
+      "lastDoneHrs": 10941.4,
+      "reference": "5-15-16",
+      "sourceDoc": "c208Template.item67",
+      "projectedDays": 731.9857142857151
+    },
+    {
+      "id": "task-C208-68-inspection-doc-17",
+      "title": "Inspection Document 17 (SID 53-50-02)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 16500,
+      "repeatIntervalHrs": 5000,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2014-03-19",
+      "lastDoneHrs": 0,
+      "reference": "SID 53-50-02",
+      "sourceDoc": "c208Template.item68",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-69-inspection-doc-18",
+      "title": "Inspection Document 18 (SID 55-10-02)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 17500,
+      "repeatIntervalHrs": 1000,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2014-03-19",
+      "lastDoneHrs": 0,
+      "reference": "SID 55-10-02",
+      "sourceDoc": "c208Template.item69",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-70-inspection-doc-19",
+      "title": "Inspection Document 19 (SID 53-20-04)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalCyc": 25000,
+      "repeatIntervalCyc": 5000,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "lastDoneDate": "2014-03-19",
+      "lastDoneCyc": 0,
+      "reference": "SID 53-20-04",
+      "sourceDoc": "c208Template.item70",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-71-inspection-doc-20",
+      "title": "Inspection Document 20 (5-15-20)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 365,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "reference": "5-15-20",
+      "lastDoneHrs": 12082.8,
+      "sourceDoc": "c208Template.item71",
+      "projectedDays": 329
+    },
+    {
+      "id": "task-C208-72-inspection-doc-21",
+      "title": "Inspection Document 21 (5-15-21)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 365,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "5-15-21",
+      "sourceDoc": "c208Template.item72",
+      "projectedDays": 329
+    },
+    {
+      "id": "task-C208-73-inspection-doc-22",
+      "title": "Inspection Document 22 (5-15-22)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalDays": 365,
+      "dueUnits": [
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "5-15-22",
+      "sourceDoc": "c208Template.item73",
+      "projectedDays": 329
+    },
+    {
+      "id": "task-C208-74-inspection-doc-23",
+      "title": "Inspection Document 23 (5-15-23, CAB-32-02)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 100,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "5-15-23, CAB-32-02",
+      "sourceDoc": "c208Template.item74",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-75-inspection-doc-24",
+      "title": "Inspection Document 24 (5-15-24, CAB-32-02)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 200,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "5-15-24, CAB-32-02",
+      "sourceDoc": "c208Template.item75",
+      "projectedDays": 9.328571428571845
+    },
+    {
+      "id": "task-C208-76-inspection-doc-25",
+      "title": "Inspection Document 25 (SID 71-20-01)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 20000,
+      "repeatIntervalHrs": 6000,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2014-03-19",
+      "lastDoneHrs": 0,
+      "reference": "SID 71-20-01",
+      "sourceDoc": "c208Template.item76",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-77-inspection-doc-26",
+      "title": "Inspection Document 26 (SID 71-20-01)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 800,
+      "initialIntervalDays": 365,
+      "dueUnits": [
+        "HOURS",
+        "DAYS"
+      ],
+      "lastDoneDate": "2025-03-21",
+      "lastDoneHrs": 11671.4,
+      "reference": "SID 71-20-01",
+      "sourceDoc": "c208Template.item77",
+      "projectedDays": 36.27142857142904
+    },
+    {
+      "id": "task-C208-78-inspection-doc-ma",
+      "title": "Inspection Document MA (SID 57-60-01)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 10000,
+      "repeatIntervalHrs": 5000,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "SID 57-60-01",
+      "sourceDoc": "c208Template.item78",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-79-inspection-doc-mb",
+      "title": "Inspection Document MB (SID 32-10-01)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalCyc": 5000,
+      "repeatIntervalCyc": 1000,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "reference": "SID 32-10-01",
+      "sourceDoc": "c208Template.item79",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-80-inspection-doc-md",
+      "title": "Inspection Document MD - Outbd, LH Flap Track (SID 57-50-01)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalCyc": 15000,
+      "repeatIntervalCyc": 3000,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "lastDoneDate": "2025-03-21",
+      "lastDoneCyc": 14716,
+      "reference": "SID 57-50-01",
+      "sourceDoc": "c208Template.item80",
+      "projectedDays": 348.1666666666667
+    },
+    {
+      "id": "task-C208-81-inspection-doc-me",
+      "title": "Inspection Document ME (ID 5-15-ME)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 5000,
+      "repeatIntervalHrs": 3600,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2025-08-14",
+      "lastDoneHrs": 12082.8,
+      "reference": "ID 5-15-ME",
+      "sourceDoc": "c208Template.item81",
+      "projectedDays": 495.04285714285754
+    },
+    {
+      "id": "task-C208-82-inspection-doc-mf",
+      "title": "Inspection Document MF (SID 53-20-02, Task 53-10-00-252)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 20000,
+      "repeatIntervalHrs": 5000,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2014-03-19",
+      "lastDoneHrs": 0,
+      "reference": "SID 53-20-02, Task 53-10-00-252",
+      "sourceDoc": "c208Template.item82",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-83-inspection-doc-mg",
+      "title": "Inspection Document MG (SID 53-20-07)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 5000,
+      "repeatIntervalHrs": 1200,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "lastDoneDate": "2025-03-21",
+      "lastDoneHrs": 11671,
+      "reference": "SID 53-20-07",
+      "sourceDoc": "c208Template.item83",
+      "projectedDays": 93.35714285714337
+    },
+    {
+      "id": "task-C208-84-inspection-doc-mh",
+      "title": "Inspection Document MH (SID 53-20-07)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 10000,
+      "repeatIntervalHrs": 2500,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "SID 53-20-07",
+      "sourceDoc": "c208Template.item84",
+      "projectedDays": 354.6428571428577,
+      "lastDoneDate": "2025-09-18",
+      "lastDoneHrs": 12200
+    },
+    {
+      "id": "task-C208-85-inspection-doc-mi",
+      "title": "Inspection Document MI (SID 53-20-07)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 5000,
+      "repeatIntervalHrs": 500,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "SID 53-20-07",
+      "sourceDoc": "c208Template.item85",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-86-inspection-doc-mj",
+      "title": "Inspection Document MJ (SID 53-20-07)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 5000,
+      "repeatIntervalHrs": 400,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "SID 53-20-07",
+      "sourceDoc": "c208Template.item86",
+      "projectedDays": 0
+    },
+    {
+      "id": "task-C208-87-inspection-doc-mk",
+      "title": "Inspection Document MK (SID 57-60-02)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 20000,
+      "repeatIntervalHrs": 4400,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "SID 57-60-02",
+      "sourceDoc": "c208Template.item87",
+      "projectedDays": 1111.785714285715
+    },
+    {
+      "id": "task-C208-88-inspection-doc-ml",
+      "title": "Inspection Document ML (SID 57-60-02)",
+      "type": "Check",
+      "aircraftType": "C208B",
+      "initialIntervalHrs": 20000,
+      "repeatIntervalHrs": 3600,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "reference": "SID 57-60-02",
+      "sourceDoc": "c208Template.item88",
+      "projectedDays": 1111.785714285715
+    }
+  ],
+  "components": [
+    {
+      "id": "comp-C208-ct-disk-3076856-01",
+      "aircraftId": "ac-AAF",
+      "name": "CT Disk",
+      "pn": "3076856-01",
+      "sn": "CRAZAGJT199",
+      "category": "LifeLimited",
+      "limitCyc": 16000,
+      "installedDate": "2023-12-12",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 11988,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "tsnAtInstallationHrs": 0,
+      "csnAtInstallation": 0,
+      "tsoAtInstallationHrs": 0,
+      "csoAtInstallation": 0,
+      "initialIntervalCyc": 16000,
+      "repeatIntervalCyc": null,
+      "projectedDays": 2060.1666666666665
+    },
+    {
+      "id": "comp-C208-mlg-axle-lh-2034-1",
+      "aircraftId": "ac-AAF",
+      "name": "Axle, MLG (LH)",
+      "pn": "C208023-1",
+      "sn": "2034-1",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item01",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-mlg-axle-rh-2035-1",
+      "aircraftId": "ac-AAF",
+      "name": "Axle, MLG (RH)",
+      "pn": "C208023-1",
+      "sn": "2035-1",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item02",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-elev-aft-pushrod-2634027-1",
+      "aircraftId": "ac-AAF",
+      "name": "Elevator Aft Push Rod",
+      "pn": "2634027-1",
+      "sn": "596",
+      "category": "LifeLimited",
+      "limitCyc": 40000,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 40000,
+      "sourceDoc": "c208Template.item10",
+      "projectedDays": 4062.1666666666665
+    },
+    {
+      "id": "comp-C208-elev-fwd-pushrod-2613440-multi",
+      "aircraftId": "ac-AAF",
+      "name": "Elevator Fwd Push Rod",
+      "pn": "2613440-1/2613414-1/2660034-1",
+      "sn": "N/A",
+      "category": "LifeLimited",
+      "limitCyc": 9500,
+      "initialIntervalCyc": 9500,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "sourceDoc": "c208Template.item11",
+      "projectedDays": 0
+    },
+    {
+      "id": "comp-C208-elev-fwd-pushrod-824",
+      "aircraftId": "ac-AAF",
+      "name": "Elevator Fwd Push Rod",
+      "pn": "2613440-3/2613440-5/DDA05946-1",
+      "sn": "824",
+      "category": "LifeLimited",
+      "limitCyc": 40000,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 40000,
+      "sourceDoc": "c208Template.item12",
+      "projectedDays": 4062.1666666666665
+    },
+    {
+      "id": "comp-C208-stub-shaft-comp-30550000-01",
+      "aircraftId": "ac-AAF",
+      "name": "Stub Shaft Comp Rotor",
+      "pn": "30550000-01",
+      "sn": "PKAAB039539",
+      "category": "LifeLimited",
+      "limitCyc": 29000,
+      "installedDate": "2023-12-12",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 11988,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 29000,
+      "sourceDoc": "c208Template.item15",
+      "projectedDays": 4226.833333333333
+    },
+    {
+      "id": "comp-C208-rotor-compressor-3076420-01",
+      "aircraftId": "ac-AAF",
+      "name": "Rotor Compressor",
+      "pn": "3076420-01",
+      "sn": "EAAF000M762",
+      "category": "LifeLimited",
+      "limitCyc": 29000,
+      "installedDate": "2023-12-12",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 11988,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 29000,
+      "sourceDoc": "c208Template.item16",
+      "projectedDays": 4226.833333333333
+    },
+    {
+      "id": "comp-C208-comp-disk-2nd-3040312",
+      "aircraftId": "ac-AAF",
+      "name": "Comp. Disk 2nd Stg",
+      "pn": "3040312",
+      "sn": "A0058HAE",
+      "category": "LifeLimited",
+      "limitCyc": 29000,
+      "installedDate": "2023-12-12",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 11988,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 29000,
+      "sourceDoc": "c208Template.item17",
+      "projectedDays": 4226.833333333333
+    },
+    {
+      "id": "comp-C208-comp-disk-3rd-3040213",
+      "aircraftId": "ac-AAF",
+      "name": "Comp. Disk 3rd Stg",
+      "pn": "3040213",
+      "sn": "A0058198",
+      "category": "LifeLimited",
+      "limitCyc": 29000,
+      "installedDate": "2023-12-12",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 11988,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 29000,
+      "sourceDoc": "c208Template.item18",
+      "projectedDays": 4226.833333333333
+    },
+    {
+      "id": "comp-C208-impeller-3079808-01",
+      "aircraftId": "ac-AAF",
+      "name": "Impeller",
+      "pn": "3079808-01",
+      "sn": "CRAZAGKM046",
+      "category": "LifeLimited",
+      "limitCyc": 29000,
+      "installedDate": "2023-12-12",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 11988,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 29000,
+      "sourceDoc": "c208Template.item19",
+      "projectedDays": 4226.833333333333
+    },
+    {
+      "id": "comp-C208-ct-disk-3076856-01-2",
+      "aircraftId": "ac-AAF",
+      "name": "CT Disk",
+      "pn": "3076856-01",
+      "sn": "CRAZAGJT199",
+      "category": "LifeLimited",
+      "limitCyc": 16000,
+      "installedDate": "2023-12-12",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 11988,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 16000,
+      "sourceDoc": "c208Template.item20",
+      "projectedDays": 2060.1666666666665
+    },
+    {
+      "id": "comp-C208-pt-disk-3076855-01",
+      "aircraftId": "ac-AAF",
+      "name": "PT Disk",
+      "pn": "3076855-01",
+      "sn": "A00581K9",
+      "category": "LifeLimited",
+      "limitCyc": 16000,
+      "installedDate": "2023-12-12",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 11988,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 16000,
+      "sourceDoc": "c208Template.item21",
+      "projectedDays": 2060.1666666666665
+    },
+    {
+      "id": "comp-C208-ignition-exciter-3043937-06",
+      "aircraftId": "ac-AAF",
+      "name": "Ignition Exciter",
+      "pn": "3043937-06",
+      "sn": "231164",
+      "category": "LifeLimited",
+      "limitHrs": 5600,
+      "installedDate": "2023-12-12",
+      "tsnHrs": 0,
+      "tsoHrs": 0,
+      "installedAtAcHrs": 9766.1,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "initialIntervalHrs": 5600,
+      "sourceDoc": "c208Template.item23",
+      "projectedDays": 449.8000000000006
+    },
+    {
+      "id": "comp-C208-fcu-3076428-03",
+      "aircraftId": "ac-AAF",
+      "name": "Fuel Control Unit (FCU)",
+      "pn": "3076428-03",
+      "sn": "23434582",
+      "category": "LifeLimited",
+      "limitHrs": 5600,
+      "installedDate": "2023-12-12",
+      "tsnHrs": 0,
+      "tsoHrs": 0,
+      "installedAtAcHrs": 9766.1,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "initialIntervalHrs": 5600,
+      "sourceDoc": "c208Template.item24",
+      "projectedDays": 449.8000000000006
+    },
+    {
+      "id": "comp-C208-fuel-heater-3076422-05",
+      "aircraftId": "ac-AAF",
+      "name": "Fuel Heater",
+      "pn": "3076422-05",
+      "sn": "WA66918",
+      "category": "LifeLimited",
+      "limitHrs": 5600,
+      "installedDate": "2023-12-12",
+      "tsnHrs": 0,
+      "tsoHrs": 0,
+      "installedAtAcHrs": 9766.1,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "initialIntervalHrs": 5600,
+      "sourceDoc": "c208Template.item25",
+      "projectedDays": 449.8000000000006
+    },
+    {
+      "id": "comp-C208-flow-divider-3023670",
+      "aircraftId": "ac-AAF",
+      "name": "Flow Divider/Start Control Inst.",
+      "pn": "3023670",
+      "sn": "23AAB0145",
+      "category": "LifeLimited",
+      "limitHrs": 5600,
+      "installedDate": "2023-12-12",
+      "tsnHrs": 0,
+      "tsoHrs": 0,
+      "installedAtAcHrs": 9766.1,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "initialIntervalHrs": 5600,
+      "sourceDoc": "c208Template.item26",
+      "projectedDays": 449.8000000000006
+    },
+    {
+      "id": "comp-C208-fuel-pump-3040760",
+      "aircraftId": "ac-AAF",
+      "name": "Fuel Pump (Argo-Tech)",
+      "pn": "3040760",
+      "sn": "19830",
+      "category": "LifeLimited",
+      "limitHrs": 5600,
+      "installedDate": "2023-12-12",
+      "tsnHrs": 0,
+      "tsoHrs": 0,
+      "installedAtAcHrs": 9766.1,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "initialIntervalHrs": 5600,
+      "sourceDoc": "c208Template.item27",
+      "projectedDays": 449.8000000000006
+    },
+    {
+      "id": "comp-C208-prop-gov-3074154-01",
+      "aircraftId": "ac-AAF",
+      "name": "Governor, Prop",
+      "pn": "3074154-01",
+      "sn": "23485552",
+      "category": "LifeLimited",
+      "limitHrs": 5100,
+      "installedDate": "2023-12-12",
+      "tsnHrs": 0,
+      "tsoHrs": 0,
+      "installedAtAcHrs": 9766.1,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "initialIntervalHrs": 5100,
+      "sourceDoc": "c208Template.item43",
+      "projectedDays": 378.37142857142913
+    },
+    {
+      "id": "comp-C208-prop-gov-os-3079150-01",
+      "aircraftId": "ac-AAF",
+      "name": "Governor, Prop O/S",
+      "pn": "3079150-01",
+      "sn": "23353841",
+      "category": "LifeLimited",
+      "limitHrs": 5100,
+      "installedDate": "2023-12-12",
+      "tsnHrs": 0,
+      "tsoHrs": 0,
+      "installedAtAcHrs": 9766.1,
+      "dueUnits": [
+        "HOURS"
+      ],
+      "initialIntervalHrs": 5100,
+      "sourceDoc": "c208Template.item44",
+      "projectedDays": 378.37142857142913
+    },
+    {
+      "id": "comp-C208-mlg-attach-pin-lh-2641008-2",
+      "aircraftId": "ac-AAF",
+      "name": "MLG Attach Pin (LH)",
+      "pn": "2641008-2",
+      "sn": "24024061A",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item89",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-mlg-attach-pin-rh-2641008-2",
+      "aircraftId": "ac-AAF",
+      "name": "MLG Attach Pin (RH)",
+      "pn": "2641008-2",
+      "sn": "24024061C",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item90",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-mlg-axle-fitting-lh-2641010-20",
+      "aircraftId": "ac-AAF",
+      "name": "MLG Axle Fitting (LH)",
+      "pn": "2641010-7",
+      "sn": "23771689J",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item91",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-mlg-axle-fitting-rh-2641013-50",
+      "aircraftId": "ac-AAF",
+      "name": "MLG Axle Fitting (RH)",
+      "pn": "2641013-17",
+      "sn": "23771687M",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item92",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-mlg-axle-fitting-lh-2641010-21",
+      "aircraftId": "ac-AAF",
+      "name": "MLG Axle Fitting (LH)",
+      "pn": "2641010-7",
+      "sn": "23771689J",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item93",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-mlg-axle-fitting-rh-2641013-17",
+      "aircraftId": "ac-AAF",
+      "name": "MLG Axle Fitting (RH)",
+      "pn": "2641013-17",
+      "sn": "23771687M",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item94",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-mlg-axle-fitting-lh-2641010-22",
+      "aircraftId": "ac-AAF",
+      "name": "MLG Axle Fitting (LH)",
+      "pn": "2641010-7",
+      "sn": "23771689J",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item95",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-mlg-axle-fitting-rh-2641013-18",
+      "aircraftId": "ac-AAF",
+      "name": "MLG Axle Fitting (RH)",
+      "pn": "2641013-17",
+      "sn": "23771687M",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item96",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-mlg-axle-fitting-lh-2641010-23",
+      "aircraftId": "ac-AAF",
+      "name": "MLG Axle Fitting (LH)",
+      "pn": "2641010-7",
+      "sn": "23771689J",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item97",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-mlg-axle-fitting-rh-2641013-19",
+      "aircraftId": "ac-AAF",
+      "name": "MLG Axle Fitting (RH)",
+      "pn": "2641013-17",
+      "sn": "23771687M",
+      "category": "LifeLimited",
+      "limitCyc": 31500,
+      "installedDate": "2014-03-19",
+      "csn": 0,
+      "cso": 0,
+      "installedAtAcCyc": 0,
+      "dueUnits": [
+        "CYCLES"
+      ],
+      "initialIntervalCyc": 31500,
+      "sourceDoc": "c208Template.item98",
+      "projectedDays": 2645.5
+    },
+    {
+      "id": "comp-C208-fuel-hoses-s2495",
+      "aircraftId": "ac-AAF",
+      "name": "Hoses, Fuel (Base # S2495)",
+      "pn": "S2495",
+      "sn": "N/A",
+      "category": "OnCondition",
+      "installedDate": "2023-12-12",
+      "dueUnits": [
+        "DAYS"
+      ],
+      "initialIntervalDays": 1825,
+      "sourceDoc": "c208Template.item48",
+      "projectedDays": 1178
+    },
+    {
+      "id": "comp-C208-pitot-static-hoses",
+      "aircraftId": "ac-AAF",
+      "name": "Hoses, Pitot Static",
+      "pn": "N/A",
+      "sn": "N/A",
+      "category": "OnCondition",
+      "installedDate": "2024-03-19",
+      "dueUnits": [
+        "DAYS"
+      ],
+      "initialIntervalDays": 3650,
+      "sourceDoc": "c208Template.item49",
+      "projectedDays": 3101
+    },
+    {
+      "id": "comp-C208-vacuum-hoses",
+      "aircraftId": "ac-AAF",
+      "name": "Hoses, Vacuum",
+      "pn": "N/A",
+      "sn": "N/A",
+      "category": "OnCondition",
+      "installedDate": "2014-03-19",
+      "dueUnits": [
+        "DAYS"
+      ],
+      "initialIntervalDays": 3650,
+      "sourceDoc": "c208Template.item50",
+      "projectedDays": 0
+    }
+  ],
+  "flightLogs": [
+    {
+      "id": "flight-91889",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-21",
+      "blockHrs": 3.9,
+      "cycles": 8,
+      "techLogNo": "91889"
+    },
+    {
+      "id": "flight-91900",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-22",
+      "blockHrs": 2.5,
+      "cycles": 6,
+      "techLogNo": "91900"
+    },
+    {
+      "id": "flight-91951",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-22",
+      "blockHrs": 1.4,
+      "cycles": 2,
+      "techLogNo": "91951"
+    },
+    {
+      "id": "flight-91952",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-23",
+      "blockHrs": 4.2,
+      "cycles": 8,
+      "techLogNo": "91952"
+    },
+    {
+      "id": "flight-91953",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-24",
+      "blockHrs": 3.5,
+      "cycles": 6,
+      "techLogNo": "91953"
+    },
+    {
+      "id": "flight-91954",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-25",
+      "blockHrs": 6.5,
+      "cycles": 10,
+      "techLogNo": "91954"
+    },
+    {
+      "id": "flight-91955",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-26",
+      "blockHrs": 3.3,
+      "cycles": 6,
+      "techLogNo": "91955"
+    },
+    {
+      "id": "flight-91956",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-27",
+      "blockHrs": 4.3,
+      "cycles": 5,
+      "techLogNo": "91956"
+    },
+    {
+      "id": "flight-91957",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-28",
+      "blockHrs": 5.9,
+      "cycles": 10,
+      "techLogNo": "91957"
+    },
+    {
+      "id": "flight-91958",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-28",
+      "blockHrs": 0.7,
+      "cycles": 1,
+      "techLogNo": "91958"
+    },
+    {
+      "id": "flight-91959",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-29",
+      "blockHrs": 3.7,
+      "cycles": 6,
+      "techLogNo": "91959"
+    },
+    {
+      "id": "flight-91960",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-30",
+      "blockHrs": 2.6,
+      "cycles": 7,
+      "techLogNo": "91960"
+    },
+    {
+      "id": "flight-91961",
+      "aircraftId": "ac-AAF",
+      "date": "2025-08-31",
+      "blockHrs": 4.3,
+      "cycles": 8,
+      "techLogNo": "91961"
+    },
+    {
+      "id": "flight-91962",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-01",
+      "blockHrs": 4.1,
+      "cycles": 8,
+      "techLogNo": "91962"
+    },
+    {
+      "id": "flight-91963",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-02",
+      "blockHrs": 3.5,
+      "cycles": 6,
+      "techLogNo": "91963"
+    },
+    {
+      "id": "flight-91964",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-03",
+      "blockHrs": 2.4,
+      "cycles": 5,
+      "techLogNo": "91964"
+    },
+    {
+      "id": "flight-91965",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-04",
+      "blockHrs": 2.9,
+      "cycles": 6,
+      "techLogNo": "91965"
+    },
+    {
+      "id": "flight-91966",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-05",
+      "blockHrs": 4.6,
+      "cycles": 8,
+      "techLogNo": "91966"
+    },
+    {
+      "id": "flight-91967",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-05",
+      "blockHrs": 0.8,
+      "cycles": 2,
+      "techLogNo": "91967"
+    },
+    {
+      "id": "flight-91968",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-05",
+      "blockHrs": 3.3,
+      "cycles": 7,
+      "techLogNo": "91968"
+    },
+    {
+      "id": "flight-91969",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-07",
+      "blockHrs": 3.7,
+      "cycles": 7,
+      "techLogNo": "91969"
+    },
+    {
+      "id": "flight-91970",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-08",
+      "blockHrs": 3.4,
+      "cycles": 7,
+      "techLogNo": "91970"
+    },
+    {
+      "id": "flight-91971",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-09",
+      "blockHrs": 5.4,
+      "cycles": 8,
+      "techLogNo": "91971"
+    },
+    {
+      "id": "flight-91972",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-10",
+      "blockHrs": 4.8,
+      "cycles": 7,
+      "techLogNo": "91972"
+    },
+    {
+      "id": "flight-91973",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-11",
+      "blockHrs": 2.4,
+      "cycles": 6,
+      "techLogNo": "91973"
+    },
+    {
+      "id": "flight-91974",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-12",
+      "blockHrs": 6.1,
+      "cycles": 8,
+      "techLogNo": "91974"
+    },
+    {
+      "id": "flight-91975",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-13",
+      "blockHrs": 5.4,
+      "cycles": 6,
+      "techLogNo": "91975"
+    },
+    {
+      "id": "flight-91976",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-14",
+      "blockHrs": 2.9,
+      "cycles": 5,
+      "techLogNo": "91976"
+    },
+    {
+      "id": "fl-ac-AAF-1758188800069",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-15",
+      "blockHrs": 2.5,
+      "cycles": 3,
+      "from": "",
+      "to": "",
+      "techlogNumber": "990856",
+      "engineTSN": 2436.400000000001,
+      "engineCSN": 3609,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 2663.599999999999,
+      "propTSN": 11345.699999999997,
+      "propTSO": 2331.4,
+      "propOH": 563.6000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758189211581",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-16",
+      "blockHrs": 0,
+      "cycles": 0,
+      "from": "",
+      "to": "",
+      "techlogNumber": "998876",
+      "hoursToCheck": 200,
+      "engineTSN": 2436.400000000001,
+      "engineCSN": 3609,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 2663.599999999999,
+      "propTSN": 11345.699999999997,
+      "propTSO": 2331.4,
+      "propOH": 563.6000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758189271177",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-17",
+      "blockHrs": 0,
+      "cycles": 0,
+      "from": "",
+      "to": "",
+      "techlogNumber": "99765",
+      "hoursToCheck": 20,
+      "isExtension": true,
+      "engineTSN": 2436.400000000001,
+      "engineCSN": 3609,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 2663.599999999999,
+      "propTSN": 11345.699999999997,
+      "propTSO": 2331.4,
+      "propOH": 563.6000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758189308477",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-18",
+      "blockHrs": 0,
+      "cycles": 0,
+      "from": "",
+      "to": "",
+      "techlogNumber": "98000",
+      "cofaReset": true,
+      "engineTSN": 2436.400000000001,
+      "engineCSN": 3609,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 2663.599999999999,
+      "propTSN": 11345.699999999997,
+      "propTSO": 2331.4,
+      "propOH": 563.6000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758189639004",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-18",
+      "blockHrs": 2.4,
+      "cycles": 5,
+      "from": "",
+      "to": "",
+      "techlogNumber": "98001",
+      "engineTSN": 2438.800000000001,
+      "engineCSN": 3614,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 2661.199999999999,
+      "propTSN": 11348.099999999997,
+      "propTSO": 2331.4,
+      "propOH": 561.2000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758201893022",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-18",
+      "blockHrs": 2.5,
+      "cycles": 9,
+      "from": "",
+      "to": "",
+      "techlogNumber": "990076",
+      "engineTSN": 2441.300000000001,
+      "engineCSN": 3623,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 2658.699999999999,
+      "propTSN": 11350.599999999997,
+      "propTSO": 2331.4,
+      "propOH": 558.7000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758201996227",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-18",
+      "blockHrs": 0,
+      "cycles": 0,
+      "from": "",
+      "to": "",
+      "techlogNumber": "990077",
+      "hoursToCheck": 200,
+      "engineTSN": 2441.300000000001,
+      "engineCSN": 3623,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 2658.699999999999,
+      "propTSN": 11350.599999999997,
+      "propTSO": 2331.4,
+      "propOH": 558.7000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758202052161",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-18",
+      "blockHrs": 0,
+      "cycles": 0,
+      "from": "",
+      "to": "",
+      "techlogNumber": "990080",
+      "hoursToCheck": 20,
+      "isExtension": true,
+      "engineTSN": 2441.300000000001,
+      "engineCSN": 3623,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 2658.699999999999,
+      "propTSN": 11350.599999999997,
+      "propTSO": 2331.4,
+      "propOH": 558.7000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758202285237",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-18",
+      "blockHrs": 0,
+      "cycles": 0,
+      "from": "",
+      "to": "",
+      "techlogNumber": "990081",
+      "cofaReset": true,
+      "engineTSN": 2441.300000000001,
+      "engineCSN": 3623,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 2658.699999999999,
+      "propTSN": 11350.599999999997,
+      "propTSO": 2331.4,
+      "propOH": 558.7000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758202933504",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-18",
+      "blockHrs": 7.6,
+      "cycles": 10,
+      "from": "",
+      "to": "",
+      "techlogNumber": "80092",
+      "engineTSN": 2448.900000000001,
+      "engineCSN": 3633,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 2651.099999999999,
+      "propTSN": 11358.199999999997,
+      "propTSO": 2331.4,
+      "propOH": 551.1000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758284492099",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-19",
+      "blockHrs": 0,
+      "cycles": 0,
+      "from": "",
+      "to": "",
+      "techlogNumber": "44500",
+      "engineOHReset": true,
+      "engineTSN": 2448.900000000001,
+      "engineCSN": 3633,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 5100,
+      "propTSN": 11358.199999999997,
+      "propTSO": 2331.4,
+      "propOH": 551.1000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758284515067",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-19",
+      "blockHrs": 2.5,
+      "cycles": 6,
+      "from": "",
+      "to": "",
+      "techlogNumber": "45678",
+      "engineTSN": 2451.400000000001,
+      "engineCSN": 3639,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 5097.5,
+      "propTSN": 11360.699999999997,
+      "propTSO": 2331.4,
+      "propOH": 548.6000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758285739055",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-19",
+      "blockHrs": 0,
+      "cycles": 0,
+      "from": "",
+      "to": "",
+      "techlogNumber": "45679",
+      "cofaReset": true,
+      "engineTSN": 2451.400000000001,
+      "engineCSN": 3639,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 5097.5,
+      "propTSN": 11360.699999999997,
+      "propTSO": 2331.4,
+      "propOH": 548.6000000000003
+    },
+    {
+      "id": "fl-ac-AAF-1758285799691",
+      "aircraftId": "ac-AAF",
+      "date": "2025-09-19",
+      "blockHrs": 0,
+      "cycles": 0,
+      "from": "",
+      "to": "",
+      "techlogNumber": "56745",
+      "propOHReset": true,
+      "engineTSN": 2451.400000000001,
+      "engineCSN": 3639,
+      "engineTSO": 0,
+      "engineCSO": 0,
+      "engineOH": 5097.5,
+      "propTSN": 11360.699999999997,
+      "propTSO": 2331.4,
+      "propOH": 3000
+    }
+  ],
+  "snags": [
+    {
+      "id": "mfpbtw3o8np07h4w55f",
+      "snagId": "SNG250918007",
+      "dateReported": "2025-09-18",
+      "aircraftId": "ac-AAF",
+      "description": "200 hrs check",
+      "status": "Open",
+      "severity": "Critical",
+      "partsOrdered": false,
+      "action": "Maintenance",
+      "notes": "",
+      "reportedBy": "Capt Mmanga",
+      "assignedTo": "Hawk",
+      "estimatedResolutionDate": "",
+      "createdAt": "2025-09-18T11:27:49.956Z",
+      "updatedAt": "2025-09-18T11:27:49.956Z"
+    }
+  ]
+}
