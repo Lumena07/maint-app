@@ -30,13 +30,13 @@ export const PersonnelTracking = ({}: PersonnelTrackingProps) => {
 
   const [trainingForm, setTrainingForm] = useState({
     personnelId: "",
-    trainingType: "Initial Training" as TrainingType,
+    category: "",
+    trainingType: "" as TrainingType,
     title: "",
     description: "",
     provider: "",
     instructor: "",
-    status: "Scheduled" as TrainingStatus,
-    scheduledDate: "",
+    status: "Completed" as TrainingStatus,
     startDate: "",
     completionDate: "",
     expiryDate: "",
@@ -167,13 +167,13 @@ export const PersonnelTracking = ({}: PersonnelTrackingProps) => {
       setEditingTraining(training);
       setTrainingForm({
         personnelId: training.personnelId,
+        category: (training as any).category || "",
         trainingType: training.trainingType,
         title: training.title,
         description: training.description,
         provider: training.provider,
         instructor: training.instructor || "",
-        status: training.status,
-        scheduledDate: training.scheduledDate || "",
+        status: "Completed" as TrainingStatus, // Always set to Completed
         startDate: training.startDate || "",
         completionDate: training.completionDate || "",
         expiryDate: training.expiryDate || "",
@@ -188,13 +188,13 @@ export const PersonnelTracking = ({}: PersonnelTrackingProps) => {
       setEditingTraining(null);
       setTrainingForm({
         personnelId: "",
-        trainingType: "Initial Training",
+        category: "",
+        trainingType: "" as TrainingType,
         title: "",
         description: "",
         provider: "",
         instructor: "",
-        status: "Scheduled",
-        scheduledDate: "",
+        status: "Completed" as TrainingStatus,
         startDate: "",
         completionDate: "",
         expiryDate: "",
@@ -427,10 +427,10 @@ export const PersonnelTracking = ({}: PersonnelTrackingProps) => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Personnel</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Training Type</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Provider</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Completion Date</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expiry Date</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -452,6 +452,9 @@ export const PersonnelTracking = ({}: PersonnelTrackingProps) => {
                         {person ? `${person.firstName} ${person.lastName}` : 'Unknown'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {(training as any).category || 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {training.trainingType}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">
@@ -459,11 +462,6 @@ export const PersonnelTracking = ({}: PersonnelTrackingProps) => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {training.provider}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex rounded-full border px-2 py-1 text-xs font-medium ${getTrainingStatusColor(training.status)}`}>
-                          {training.status}
-                        </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {training.completionDate ? new Date(training.completionDate).toLocaleDateString('en-GB') : 'N/A'}
@@ -664,7 +662,7 @@ export const PersonnelTracking = ({}: PersonnelTrackingProps) => {
               </h3>
               
               <form onSubmit={handleSaveTraining} className="space-y-4">
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Personnel *</label>
                     <select
@@ -683,6 +681,21 @@ export const PersonnelTracking = ({}: PersonnelTrackingProps) => {
                   </div>
                   
                   <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+                    <select
+                      value={trainingForm.category || ''}
+                      onChange={(e) => setTrainingForm({...trainingForm, category: e.target.value})}
+                      className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      required
+                    >
+                      <option value="">Select Category</option>
+                      <option value="Initial">Initial</option>
+                      <option value="Recurrent">Recurrent</option>
+                      <option value="Additional">Additional</option>
+                    </select>
+                  </div>
+                  
+                  <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Training Type *</label>
                     <select
                       value={trainingForm.trainingType}
@@ -690,15 +703,12 @@ export const PersonnelTracking = ({}: PersonnelTrackingProps) => {
                       className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       required
                     >
-                      <option value="Initial Training">Initial Training</option>
-                      <option value="Recurrent Training">Recurrent Training</option>
-                      <option value="Update Training">Update Training</option>
-                      <option value="Additional Training">Additional Training</option>
-                      <option value="Indoctrination Training">Indoctrination Training</option>
-                      <option value="Type Training">Type Training</option>
+                      <option value="">Select Training Type</option>
+                      <option value="Indoctrination">Indoctrination</option>
+                      <option value="Type Rating">Type Rating</option>
+                      <option value="Human Factors">Human Factors</option>
                       <option value="MEL Training">MEL Training</option>
                       <option value="SMS Training">SMS Training</option>
-                      <option value="Human Factors Training">Human Factors Training</option>
                     </select>
                   </div>
                 </div>
@@ -752,46 +762,18 @@ export const PersonnelTracking = ({}: PersonnelTrackingProps) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Status *</label>
-                    <select
-                      value={trainingForm.status}
-                      onChange={(e) => setTrainingForm({...trainingForm, status: e.target.value as TrainingStatus})}
-                      className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                      required
-                    >
-                      <option value="Scheduled">Scheduled</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="Completed">Completed</option>
-                      <option value="Expired">Expired</option>
-                      <option value="Cancelled">Cancelled</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Duration (Hours)</label>
-                    <input
-                      type="number"
-                      value={trainingForm.durationHours}
-                      onChange={(e) => setTrainingForm({...trainingForm, durationHours: parseInt(e.target.value) || 0})}
-                      className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                      min="0"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Duration (Hours)</label>
+                  <input
+                    type="number"
+                    value={trainingForm.durationHours}
+                    onChange={(e) => setTrainingForm({...trainingForm, durationHours: parseInt(e.target.value) || 0})}
+                    className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    min="0"
+                  />
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Scheduled Date</label>
-                    <input
-                      type="date"
-                      value={trainingForm.scheduledDate}
-                      onChange={(e) => setTrainingForm({...trainingForm, scheduledDate: e.target.value})}
-                      className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    />
-                  </div>
-                  
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
                     <input

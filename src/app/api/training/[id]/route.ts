@@ -1,22 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { TrainingRecord } from '@/lib/types';
-
-// Mock data storage (in a real app, this would be a database)
-const trainingData: TrainingRecord[] = [];
-
-// Helper function to calculate training status
-const calculateTrainingStatus = (expiryDate?: string, completionDate?: string): 'Valid' | 'Expiring Soon' | 'Expired' | 'Not Completed' => {
-  if (!completionDate) return 'Not Completed';
-  if (!expiryDate) return 'Valid';
-  
-  const today = new Date();
-  const expiry = new Date(expiryDate);
-  const daysUntilExpiry = Math.ceil((expiry.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-  
-  if (daysUntilExpiry < 0) return 'Expired';
-  if (daysUntilExpiry <= 30) return 'Expiring Soon';
-  return 'Valid';
-};
+import { readCache, writeCache, updateCacheSection } from '@/lib/kv';
 
 // GET /api/training/[id]
 export async function GET(
@@ -25,19 +9,20 @@ export async function GET(
 ) {
   try {
     const trainingId = (await params).id;
-    const training = trainingData.find(t => t.id === trainingId);
+    
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
+    
+    const trainingRecords = cache.trainingRecords || [];
+    const training = trainingRecords.find((t: TrainingRecord) => t.id === trainingId);
     
     if (!training) {
       return NextResponse.json({ error: 'Training record not found' }, { status: 404 });
     }
 
-    // Update training status
-    const updatedTraining = {
-      ...training,
-      status: calculateTrainingStatus(training.expiryDate, training.completionDate) as any
-    };
-
-    return NextResponse.json(updatedTraining);
+    return NextResponse.json(training);
   } catch (error) {
     console.error('Error fetching training record:', error);
     return NextResponse.json({ error: 'Failed to fetch training record' }, { status: 500 });
@@ -51,24 +36,35 @@ export async function PUT(
 ) {
   try {
     const trainingId = (await params).id;
-    const body = await request.json();
+    const updatedTraining: TrainingRecord = await request.json();
     
-    const trainingIndex = trainingData.findIndex(t => t.id === trainingId);
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
     
-    if (trainingIndex === -1) {
+    const trainingRecords = cache.trainingRecords || [];
+    const index = trainingRecords.findIndex((t: TrainingRecord) => t.id === trainingId);
+    
+    if (index === -1) {
       return NextResponse.json({ error: 'Training record not found' }, { status: 404 });
     }
 
-    const updatedTraining: TrainingRecord = {
-      ...trainingData[trainingIndex],
-      ...body,
+    const trainingWithUpdates = {
+      ...updatedTraining,
       id: trainingId, // Ensure ID doesn't change
       updatedAt: new Date().toISOString()
     };
 
-    trainingData[trainingIndex] = updatedTraining;
+    trainingRecords[index] = trainingWithUpdates;
     
-    return NextResponse.json(updatedTraining);
+    const success = await updateCacheSection('trainingRecords', trainingRecords);
+    
+    if (success) {
+      return NextResponse.json(trainingWithUpdates);
+    } else {
+      return NextResponse.json({ error: "Failed to save training record" }, { status: 500 });
+    }
   } catch (error) {
     console.error('Error updating training record:', error);
     return NextResponse.json({ error: 'Failed to update training record' }, { status: 500 });
@@ -82,15 +78,26 @@ export async function DELETE(
 ) {
   try {
     const trainingId = (await params).id;
-    const trainingIndex = trainingData.findIndex(t => t.id === trainingId);
     
-    if (trainingIndex === -1) {
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
+    
+    const trainingRecords = cache.trainingRecords || [];
+    const filteredRecords = trainingRecords.filter((t: TrainingRecord) => t.id !== trainingId);
+    
+    if (filteredRecords.length === trainingRecords.length) {
       return NextResponse.json({ error: 'Training record not found' }, { status: 404 });
     }
-
-    trainingData.splice(trainingIndex, 1);
     
-    return NextResponse.json({ message: 'Training record deleted successfully' });
+    const success = await updateCacheSection('trainingRecords', filteredRecords);
+    
+    if (success) {
+      return NextResponse.json({ message: 'Training record deleted successfully' });
+    } else {
+      return NextResponse.json({ error: "Failed to delete training record" }, { status: 500 });
+    }
   } catch (error) {
     console.error('Error deleting training record:', error);
     return NextResponse.json({ error: 'Failed to delete training record' }, { status: 500 });
