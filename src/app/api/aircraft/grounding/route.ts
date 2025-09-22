@@ -135,7 +135,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
 
-    writeCache(cache);
+    const success = await writeCache(cache);
+    if (!success) {
+      return NextResponse.json({ error: 'Failed to save data' }, { status: 500 });
+    }
 
     return NextResponse.json(cache.aircraft[aircraftIndex]);
 
@@ -194,7 +197,10 @@ export async function PUT(request: NextRequest) {
       groundingStatus
     };
 
-    writeCache(cache);
+    const success = await writeCache(cache);
+    if (!success) {
+      return NextResponse.json({ error: 'Failed to save data' }, { status: 500 });
+    }
 
     return NextResponse.json(cache.aircraft[aircraftIndex]);
 
