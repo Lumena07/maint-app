@@ -101,7 +101,7 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
           t.id.includes('task-C208-68') || t.id.includes('task-C208-69')
         );
         console.log('refreshData - Recent tasks found:', recentTasks.length);
-        recentTasks.forEach(task => {
+        recentTasks.forEach((task: MaintenanceTask) => {
           console.log(`refreshData - Task ${task.id}: lastDoneHrs = ${task.lastDoneHrs}`);
         });
         
@@ -119,7 +119,7 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
           t.id.includes('task-C208-68') || t.id.includes('task-C208-69')
         );
         console.log('refreshData - Recent tasks in filtered results:', filteredRecentTasks.length);
-        filteredRecentTasks.forEach(task => {
+        filteredRecentTasks.forEach((task: MaintenanceTask) => {
           console.log(`refreshData - Filtered task ${task.id}: lastDoneHrs = ${task.lastDoneHrs}`);
         });
         
