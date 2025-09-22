@@ -1,6 +1,7 @@
 import { Aircraft, MaintenanceTask, Assembly, ComplianceRecord, Component } from "./types";
 import fs from "fs";
 import path from "path";
+import { readCache, initializeCache } from "./kv";
 
 // Data service: replace internals of these functions to connect to your real source
 // e.g., database queries, REST calls, or file parsers.

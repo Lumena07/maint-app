@@ -1,16 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { readCache, writeCache, updateCacheSection } from "@/lib/kv";
 import { MaintenanceTask } from "@/lib/types";
-
-const CACHE_PATH = path.join(process.cwd(), "public", "aca-cache.json");
 
 // GET all tasks
 export async function GET() {
   try {
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
-    return NextResponse.json(data.tasks || []);
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
+    return NextResponse.json(cache.tasks || []);
   } catch (_error) {
     return NextResponse.json({ error: "Failed to read tasks" }, { status: 500 });
   }
@@ -27,17 +26,20 @@ export async function POST(request: NextRequest) {
     }
     
     // Read current data
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
     
     // Add new task
-    data.tasks = data.tasks || [];
-    data.tasks.push(newTask);
+    const updatedTasks = [...(cache.tasks || []), newTask];
+    const success = await updateCacheSection('tasks', updatedTasks);
     
-    // Write back to file
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(data, null, 2));
-    
-    return NextResponse.json(newTask);
+    if (success) {
+      return NextResponse.json(newTask);
+    } else {
+      return NextResponse.json({ error: "Failed to save task" }, { status: 500 });
+    }
   } catch (_error) {
     return NextResponse.json({ error: "Failed to create task" }, { status: 500 });
   }
@@ -49,22 +51,26 @@ export async function PUT(request: NextRequest) {
     const updatedTask: MaintenanceTask = await request.json();
     
     // Read current data
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
     
     // Update task
-    data.tasks = data.tasks || [];
-    const index = data.tasks.findIndex((t: MaintenanceTask) => t.id === updatedTask.id);
+    const tasks = cache.tasks || [];
+    const index = tasks.findIndex((t: MaintenanceTask) => t.id === updatedTask.id);
     if (index !== -1) {
-      data.tasks[index] = updatedTask;
+      tasks[index] = updatedTask;
+      const success = await updateCacheSection('tasks', tasks);
+      
+      if (success) {
+        return NextResponse.json(updatedTask);
+      } else {
+        return NextResponse.json({ error: "Failed to save task" }, { status: 500 });
+      }
     } else {
       return NextResponse.json({ error: "Task not found" }, { status: 404 });
     }
-    
-    // Write back to file
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(data, null, 2));
-    
-    return NextResponse.json(updatedTask);
   } catch (_error) {
     return NextResponse.json({ error: "Failed to update task" }, { status: 500 });
   }
@@ -81,17 +87,21 @@ export async function DELETE(request: NextRequest) {
     }
     
     // Read current data
-    const raw = fs.readFileSync(CACHE_PATH, "utf8");
-    const data = JSON.parse(raw);
+    const cache = await readCache();
+    if (!cache) {
+      return NextResponse.json({ error: "Cache not available" }, { status: 500 });
+    }
     
     // Remove task
-    data.tasks = data.tasks || [];
-    data.tasks = data.tasks.filter((t: MaintenanceTask) => t.id !== taskId);
+    const tasks = cache.tasks || [];
+    const filteredTasks = tasks.filter((t: MaintenanceTask) => t.id !== taskId);
+    const success = await updateCacheSection('tasks', filteredTasks);
     
-    // Write back to file
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(data, null, 2));
-    
-    return NextResponse.json({ success: true });
+    if (success) {
+      return NextResponse.json({ success: true });
+    } else {
+      return NextResponse.json({ error: "Failed to delete task" }, { status: 500 });
+    }
   } catch (_error) {
     return NextResponse.json({ error: "Failed to delete task" }, { status: 500 });
   }
