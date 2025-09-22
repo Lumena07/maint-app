@@ -45,17 +45,13 @@ let lastCacheLoad = 0;
 
 async function loadCacheIfAvailable() {
   try {
-    const cachePath = path.join(process.cwd(), "public", "aca-cache.json");
+    const now = Date.now();
     
-    if (fs.existsSync(cachePath)) {
-      const stats = fs.statSync(cachePath);
-      const now = Date.now();
+    // Force reload if it's been more than 1 second since last load
+    if (now - lastCacheLoad > 1000) {
+      const data = await readCache();
       
-      // Force reload if it's been more than 1 second since last load
-      if (now - lastCacheLoad > 1000) {
-        const raw = fs.readFileSync(cachePath, "utf8");
-        const data = JSON.parse(raw);
-        
+      if (data) {
         // Force clear any existing cache
         cacheAircraft = [];
         cacheTasks = [];
@@ -68,18 +64,17 @@ async function loadCacheIfAvailable() {
         lastCacheLoad = now;
         
         const timestamp = new Date().toLocaleTimeString();
-        const fileTime = stats.mtime.toLocaleTimeString();
-        console.log(`✅ Cache reloaded at ${timestamp} (file modified: ${fileTime}): ${cacheAircraft.length} aircraft`);
+        console.log(`✅ Cache reloaded from Blob at ${timestamp}: ${cacheAircraft.length} aircraft`);
         if (cacheAircraft.length > 0) {
           console.log("Current aircraft data:", cacheAircraft[0]);
           console.log("Raw currentCyc value:", cacheAircraft[0].currentCyc);
         }
+      } else {
+        console.warn("❌ No cache data found in Blob");
       }
-    } else {
-      console.warn("❌ Cache file not found at:", cachePath);
     }
   } catch (e) {
-    console.error("❌ Failed to load cache:", e);
+    console.error("❌ Failed to load cache from Blob:", e);
   }
 }
 

@@ -1,36 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
 import { Snag } from '@/lib/types';
-
-const CACHE_FILE = join(process.cwd(), 'public', 'aca-cache.json');
+import { readCache as readBlobCache, updateCacheSection } from '@/lib/kv';
 
 const generateId = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 };
 
-const readCache = (): any => {
-  try {
-    const data = readFileSync(CACHE_FILE, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error('Error reading cache:', error);
-    return { aircraft: [], snags: [] };
-  }
-};
-
-const writeCache = (data: any): void => {
-  try {
-    writeFileSync(CACHE_FILE, JSON.stringify(data, null, 2));
-  } catch (error) {
-    console.error('Error writing cache:', error);
-    throw new Error('Failed to save data');
-  }
-};
-
 export async function GET() {
   try {
-    const cache = readCache();
+    const cache = await readBlobCache();
+    if (!cache) {
+      return NextResponse.json({ error: 'Cache not available' }, { status: 500 });
+    }
     return NextResponse.json(cache.snags || []);
   } catch (error) {
     console.error('Error fetching snags:', error);
@@ -47,7 +28,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const cache = readCache();
+    const cache = await readBlobCache();
+    if (!cache) {
+      return NextResponse.json({ error: 'Cache not available' }, { status: 500 });
+    }
     
     // Check if snag ID already exists
     const existingSnag = cache.snags?.find((s: Snag) => s.snagId === snagId);
@@ -79,12 +63,12 @@ export async function POST(request: NextRequest) {
       updatedAt: new Date().toISOString()
     };
 
-    if (!cache.snags) {
-      cache.snags = [];
+    const updatedSnags = [...(cache.snags || []), newSnag];
+    const success = await updateCacheSection('snags', updatedSnags);
+    
+    if (!success) {
+      return NextResponse.json({ error: 'Failed to save snag' }, { status: 500 });
     }
-
-    cache.snags.push(newSnag);
-    writeCache(cache);
 
     return NextResponse.json(newSnag, { status: 201 });
 

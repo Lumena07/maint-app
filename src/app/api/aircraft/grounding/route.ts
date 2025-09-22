@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
 import { Aircraft, GroundingRecord, GroundingStatus } from '@/lib/types';
-
-const CACHE_FILE = join(process.cwd(), 'public', 'aca-cache.json');
+import { readCache as readBlobCache, writeCache as writeBlobCache } from '@/lib/kv';
 
 const calculateDaysOnGround = (groundingDate: string, ungroundingDate?: string): number => {
   const start = new Date(groundingDate);
@@ -16,22 +13,25 @@ const generateId = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 };
 
-const readCache = (): any => {
+const readCache = async (): Promise<any> => {
   try {
-    const data = readFileSync(CACHE_FILE, 'utf8');
-    return JSON.parse(data);
+    const data = await readBlobCache();
+    if (!data) {
+      return { aircraft: [], groundingRecords: [] };
+    }
+    return data;
   } catch (error) {
     console.error('Error reading cache:', error);
     return { aircraft: [] };
   }
 };
 
-const writeCache = (data: any): void => {
+const writeCache = async (data: any): Promise<boolean> => {
   try {
-    writeFileSync(CACHE_FILE, JSON.stringify(data, null, 2));
+    return await writeBlobCache(data);
   } catch (error) {
     console.error('Error writing cache:', error);
-    throw new Error('Failed to save data');
+    return false;
   }
 };
 
