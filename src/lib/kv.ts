@@ -19,22 +19,27 @@ const CACHE_BLOB_PATH = 'aircraft-cache.json';
  */
 export async function readCache(): Promise<CacheData | null> {
   try {
+    console.log('readCache - Reading from Blob...');
     // Check if blob exists
     const blobInfo = await head(CACHE_BLOB_PATH);
     if (!blobInfo) {
+      console.log('readCache - No blob found');
       return null;
     }
 
+    console.log(`readCache - Blob URL: ${blobInfo.url}`);
     // Fetch the blob content
     const response = await fetch(blobInfo.url);
     if (!response.ok) {
+      console.error(`readCache - Failed to fetch blob: ${response.status}`);
       return null;
     }
 
     const data = await response.json();
+    console.log(`readCache - Loaded data with ${data.tasks?.length || 0} tasks`);
     return data;
   } catch (error) {
-    console.error('Error reading from Blob:', error);
+    console.error('readCache - Error reading from Blob:', error);
     return null;
   }
 }
@@ -44,16 +49,21 @@ export async function readCache(): Promise<CacheData | null> {
  */
 export async function writeCache(data: CacheData): Promise<boolean> {
   try {
+    console.log('writeCache - Writing data to Blob...');
     const jsonString = JSON.stringify(data, null, 2);
+    console.log(`writeCache - Data size: ${jsonString.length} characters`);
+    console.log(`writeCache - Tasks count: ${data.tasks?.length || 0}`);
+    
     const blob = await put(CACHE_BLOB_PATH, jsonString, {
       access: 'public',
       allowOverwrite: true, // Allow overwriting the existing cache file
       cacheControlMaxAge: 60, // Cache for 1 minute to allow updates
     });
 
+    console.log(`writeCache - Blob URL: ${blob.url}`);
     return !!blob.url;
   } catch (error) {
-    console.error('Error writing to Blob:', error);
+    console.error('writeCache - Error writing to Blob:', error);
     return false;
   }
 }
@@ -92,8 +102,10 @@ export async function updateCacheSection(
   data: any[]
 ): Promise<boolean> {
   try {
+    console.log(`updateCacheSection - Updating ${section} with ${data.length} items`);
     const currentCache = await readCache();
     if (!currentCache) {
+      console.error('updateCacheSection - No current cache found');
       return false;
     }
 
@@ -103,9 +115,12 @@ export async function updateCacheSection(
       lastUpdated: new Date().toISOString()
     };
 
-    return await writeCache(updatedCache);
+    console.log(`updateCacheSection - Writing updated cache for ${section}`);
+    const result = await writeCache(updatedCache);
+    console.log(`updateCacheSection - Write result: ${result}`);
+    return result;
   } catch (error) {
-    console.error('Error updating cache section:', error);
+    console.error('updateCacheSection - Error updating cache section:', error);
     return false;
   }
 }

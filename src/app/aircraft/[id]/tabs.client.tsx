@@ -94,13 +94,18 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
       
       if (tasksResponse.ok) {
         const allTasks = await tasksResponse.json();
+        console.log(`refreshData - Received ${allTasks.length} total tasks from API`);
+        if (allTasks.length > 0) {
+          console.log('refreshData - First task from API:', allTasks[0]);
+        }
+        
         const aircraftTasks = allTasks.filter((t: MaintenanceTask) => 
           t.aircraftType === aircraft.type || t.tailSpecificId === aircraft.id
         );
-        console.log(`Loaded ${aircraftTasks.length} tasks for aircraft ${aircraft.registration}`);
+        console.log(`refreshData - Filtered to ${aircraftTasks.length} tasks for aircraft ${aircraft.registration}`);
         setTasks(aircraftTasks);
       } else {
-        console.error('Failed to fetch tasks:', tasksResponse.status);
+        console.error('refreshData - Failed to fetch tasks:', tasksResponse.status);
       }
       
       if (componentsResponse.ok) {
