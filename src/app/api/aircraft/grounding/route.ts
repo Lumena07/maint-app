@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Aircraft ID is required' }, { status: 400 });
     }
 
-    const cache = readCache();
+    const cache = await readCache();
     const aircraftIndex = cache.aircraft.findIndex((a: Aircraft) => a.id === aircraftId);
 
     if (aircraftIndex === -1) {
@@ -157,7 +157,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Aircraft ID and Record ID are required' }, { status: 400 });
     }
 
-    const cache = readCache();
+    const cache = await readCache();
     const aircraftIndex = cache.aircraft.findIndex((a: Aircraft) => a.id === aircraftId);
 
     if (aircraftIndex === -1) {
@@ -216,7 +216,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Aircraft ID is required' }, { status: 400 });
     }
 
-    const cache = readCache();
+    const cache = await readCache();
     const aircraft = cache.aircraft.find((a: Aircraft) => a.id === aircraftId);
 
     if (!aircraft) {
