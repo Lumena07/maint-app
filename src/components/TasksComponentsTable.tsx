@@ -440,9 +440,12 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
           // Show success notification
           showNotification('success', `${type} deleted successfully!`);
           
-          // Refresh the data
+          // Refresh the data with a small delay to ensure API has processed the update
           if (onDataUpdate) {
-            onDataUpdate();
+            console.log('Calling onDataUpdate to refresh data after delete...');
+            setTimeout(() => {
+              onDataUpdate();
+            }, 100); // Small delay to ensure API has processed the update
           } else {
             // Fallback to page reload if no callback provided
             window.location.reload();
@@ -480,10 +483,14 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
         // Show success notification
         showNotification('success', `${editingType} saved successfully!`);
         
-        // Refresh the data
+        // Refresh the data with a small delay to ensure API has processed the update
         if (onDataUpdate) {
-          onDataUpdate();
+          console.log('Calling onDataUpdate to refresh data...');
+          setTimeout(() => {
+            onDataUpdate();
+          }, 100); // Small delay to ensure API has processed the update
         } else {
+          console.log('No onDataUpdate callback, falling back to page reload');
           // Fallback to page reload if no callback provided
           window.location.reload();
         }

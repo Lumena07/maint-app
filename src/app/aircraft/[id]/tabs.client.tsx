@@ -86,6 +86,7 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
   // Function to refresh data after updates
   const refreshData = async () => {
     try {
+      console.log('Refreshing data from API...');
       const [tasksResponse, componentsResponse] = await Promise.all([
         fetch('/api/tasks'),
         fetch('/api/components')
@@ -96,7 +97,10 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
         const aircraftTasks = allTasks.filter((t: MaintenanceTask) => 
           t.aircraftType === aircraft.type || t.tailSpecificId === aircraft.id
         );
+        console.log(`Loaded ${aircraftTasks.length} tasks for aircraft ${aircraft.registration}`);
         setTasks(aircraftTasks);
+      } else {
+        console.error('Failed to fetch tasks:', tasksResponse.status);
       }
       
       if (componentsResponse.ok) {
@@ -104,7 +108,10 @@ export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
         const aircraftComponents = allComponents.filter((c: Component) => 
           c.aircraftId === aircraft.id
         );
+        console.log(`Loaded ${aircraftComponents.length} components for aircraft ${aircraft.registration}`);
         setComponents(aircraftComponents);
+      } else {
+        console.error('Failed to fetch components:', componentsResponse.status);
       }
     } catch (error) {
       console.error('Error refreshing data:', error);
