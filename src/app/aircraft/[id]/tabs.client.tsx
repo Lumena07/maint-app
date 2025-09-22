@@ -9,19 +9,95 @@ import { HoursTracking } from "@/components/HoursTracking";
 
 type TabProps = {
   aircraft: Aircraft;
-  tasks: MaintenanceTask[];
-  compliance: ComplianceRecord[];
-  assemblies: Assembly[];
-  components: Component[];
   onAircraftUpdate?: (updatedAircraft: Aircraft) => void;
 };
 
 type Tab = "tasks-components" | "hours" | "projections" | "aircraft-details";
 
-export default function AircraftTabs({ aircraft, tasks, assemblies, components, onAircraftUpdate }: TabProps) {
+export default function AircraftTabs({ aircraft, onAircraftUpdate }: TabProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>("tasks-components");
+  
+  // State for data loaded from API
+  const [tasks, setTasks] = useState<MaintenanceTask[]>([]);
+  const [components, setComponents] = useState<Component[]>([]);
+  const [assemblies, setAssemblies] = useState<Assembly[]>([]);
+  const [compliance, setCompliance] = useState<ComplianceRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Load data from API endpoints
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        
+        // Load tasks and components from API
+        const [tasksResponse, componentsResponse] = await Promise.all([
+          fetch('/api/tasks'),
+          fetch('/api/components')
+        ]);
+        
+        if (tasksResponse.ok) {
+          const allTasks = await tasksResponse.json();
+          // Filter tasks for this aircraft
+          const aircraftTasks = allTasks.filter((t: MaintenanceTask) => 
+            t.aircraftType === aircraft.type || t.tailSpecificId === aircraft.id
+          );
+          setTasks(aircraftTasks);
+        }
+        
+        if (componentsResponse.ok) {
+          const allComponents = await componentsResponse.json();
+          // Filter components for this aircraft
+          const aircraftComponents = allComponents.filter((c: Component) => 
+            c.aircraftId === aircraft.id
+          );
+          setComponents(aircraftComponents);
+        }
+        
+        // For now, set empty arrays for assemblies and compliance
+        // These can be loaded from API endpoints if they exist
+        setAssemblies([]);
+        setCompliance([]);
+        
+      } catch (error) {
+        console.error('Error loading data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadData();
+  }, [aircraft.id, aircraft.type]);
+
+  // Function to refresh data after updates
+  const refreshData = async () => {
+    try {
+      const [tasksResponse, componentsResponse] = await Promise.all([
+        fetch('/api/tasks'),
+        fetch('/api/components')
+      ]);
+      
+      if (tasksResponse.ok) {
+        const allTasks = await tasksResponse.json();
+        const aircraftTasks = allTasks.filter((t: MaintenanceTask) => 
+          t.aircraftType === aircraft.type || t.tailSpecificId === aircraft.id
+        );
+        setTasks(aircraftTasks);
+      }
+      
+      if (componentsResponse.ok) {
+        const allComponents = await componentsResponse.json();
+        const aircraftComponents = allComponents.filter((c: Component) => 
+          c.aircraftId === aircraft.id
+        );
+        setComponents(aircraftComponents);
+      }
+    } catch (error) {
+      console.error('Error refreshing data:', error);
+    }
+  };
 
   // Initialize tab from URL parameter
   useEffect(() => {
@@ -56,6 +132,16 @@ export default function AircraftTabs({ aircraft, tasks, assemblies, components, 
     }
   };
 
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-center py-8">
+          <div className="text-gray-500">Loading data...</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
       {/* Tab Navigation */}
@@ -89,7 +175,8 @@ export default function AircraftTabs({ aircraft, tasks, assemblies, components, 
             <TasksComponentsTable 
               aircraft={aircraft} 
               tasks={tasks} 
-              components={components} 
+              components={components}
+              onDataUpdate={refreshData}
             />
           </div>
         )}

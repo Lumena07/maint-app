@@ -1,17 +1,11 @@
 import { notFound } from "next/navigation";
-import { getAircraftById, getTasksForAircraft, getComplianceForAircraft, getAssembliesForAircraft, getComponentsForAircraft } from "@/lib/data";
+import { getAircraftById } from "@/lib/data";
 import AircraftTabs from "./tabs.client";
 
 export default async function AircraftPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const ac = await getAircraftById(id);
   if (!ac) return notFound();
-  const [tasks, compliance, assemblies, components] = await Promise.all([
-    getTasksForAircraft(ac),
-    getComplianceForAircraft(ac),
-    getAssembliesForAircraft(ac),
-    getComponentsForAircraft(ac)
-  ]);
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-6">
@@ -22,10 +16,6 @@ export default async function AircraftPage({ params }: { params: Promise<{ id: s
 
       <AircraftTabs 
         aircraft={ac} 
-        tasks={tasks} 
-        compliance={compliance} 
-        assemblies={assemblies}
-        components={components}
       />
     </main>
   );

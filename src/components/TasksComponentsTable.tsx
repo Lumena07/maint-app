@@ -9,6 +9,7 @@ type TasksComponentsTableProps = {
   aircraft: Aircraft;
   tasks: MaintenanceTask[];
   components: Component[];
+  onDataUpdate?: () => void;
 };
 
 type TableRow = {
@@ -327,7 +328,7 @@ const getRowBackgroundColor = (status: string) => {
   }
 };
 
-export const TasksComponentsTable = ({ aircraft, tasks, components }: TasksComponentsTableProps) => {
+export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate }: TasksComponentsTableProps) => {
   // State for modals
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -424,9 +425,13 @@ export const TasksComponentsTable = ({ aircraft, tasks, components }: TasksCompo
         });
         
         if (response.ok) {
-          // Refresh the cache and reload the page to show updated data
-          await refreshCache();
-          window.location.reload();
+          // Refresh the data
+          if (onDataUpdate) {
+            onDataUpdate();
+          } else {
+            // Fallback to page reload if no callback provided
+            window.location.reload();
+          }
         } else {
           alert("Failed to delete item");
         }
@@ -457,9 +462,13 @@ export const TasksComponentsTable = ({ aircraft, tasks, components }: TasksCompo
           body: JSON.stringify({ aircraftId: aircraft.id }),
         });
         
-        // Refresh the cache and reload the page to show updated data
-        await refreshCache();
-        window.location.reload();
+        // Refresh the data
+        if (onDataUpdate) {
+          onDataUpdate();
+        } else {
+          // Fallback to page reload if no callback provided
+          window.location.reload();
+        }
       } else {
         alert("Failed to save changes");
       }

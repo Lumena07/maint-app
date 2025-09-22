@@ -55,7 +55,7 @@ async function loadCacheIfAvailable() {
     
     // Force reload if it's been more than 1 second since last load
     if (now - lastCacheLoad > 1000) {
-      const data = await readCache();
+      let data = await readCache();
       
       if (data) {
         // Force clear any existing cache
@@ -76,18 +76,56 @@ async function loadCacheIfAvailable() {
           console.log("Raw currentCyc value:", cacheAircraft[0].currentCyc);
         }
       } else {
-        console.warn("❌ No cache data found in Blob");
+        console.warn("❌ No cache data found in Blob, trying local file...");
+        
+        // Fallback to local JSON file if Blob is not available
+        try {
+          const cachePath = path.join(process.cwd(), "public", "aca-cache.json");
+          if (fs.existsSync(cachePath)) {
+            const raw = fs.readFileSync(cachePath, "utf8");
+            const fileData = JSON.parse(raw);
+            
+            cacheAircraft = fileData.aircraft || [];
+            cacheTasks = fileData.tasks || [];
+            cacheComponents = fileData.components || [];
+            
+            lastCacheLoad = now;
+            console.log(`✅ Cache loaded from local file: ${cacheAircraft.length} aircraft, ${cacheTasks.length} tasks, ${cacheComponents.length} components`);
+          } else {
+            console.warn("❌ No local cache file found either");
+          }
+        } catch (fileError) {
+          console.error("❌ Failed to load from local file:", fileError);
+        }
       }
     }
   } catch (e) {
     console.error("❌ Failed to load cache from Blob:", e);
+    
+    // Fallback to local JSON file on error
+    try {
+      const cachePath = path.join(process.cwd(), "public", "aca-cache.json");
+      if (fs.existsSync(cachePath)) {
+        const raw = fs.readFileSync(cachePath, "utf8");
+        const fileData = JSON.parse(raw);
+        
+        cacheAircraft = fileData.aircraft || [];
+        cacheTasks = fileData.tasks || [];
+        cacheComponents = fileData.components || [];
+        
+        lastCacheLoad = Date.now();
+        console.log(`✅ Cache loaded from local file (fallback): ${cacheAircraft.length} aircraft, ${cacheTasks.length} tasks, ${cacheComponents.length} components`);
+      }
+    } catch (fileError) {
+      console.error("❌ Failed to load from local file (fallback):", fileError);
+    }
   }
 }
 
 export async function getAircraftList(): Promise<Aircraft[]> {
   await loadCacheIfAvailable();
   const result = cacheAircraft.length > 0 ? cacheAircraft : seededAircraft;
-  console.log("Returning aircraft data:", result[0]);
+  console.log(`Returning ${result.length} aircraft (${cacheAircraft.length > 0 ? 'from cache' : 'seeded data'})`);
   return result;
 }
 
@@ -101,7 +139,9 @@ export async function getAircraftById(id: string): Promise<Aircraft | undefined>
 export async function getTasksForAircraft(ac: Aircraft): Promise<MaintenanceTask[]> {
   await loadCacheIfAvailable();
   const src = cacheTasks.length ? cacheTasks : seededTasks;
-  return src.filter(t => t.aircraftType === ac.type || t.tailSpecificId === ac.id);
+  const filtered = src.filter(t => t.aircraftType === ac.type || t.tailSpecificId === ac.id);
+  console.log(`Returning ${filtered.length} tasks for ${ac.registration} (${cacheTasks.length > 0 ? 'from cache' : 'seeded data'})`);
+  return filtered;
 }
 
 
@@ -114,7 +154,9 @@ export async function getAssembliesForAircraft(ac: Aircraft): Promise<Assembly[]
 export async function getComponentsForAircraft(ac: Aircraft): Promise<Component[]> {
   await loadCacheIfAvailable();
   const src = cacheComponents.length ? cacheComponents : seededComponents;
-  return src.filter(c => c.aircraftId === ac.id);
+  const filtered = src.filter(c => c.aircraftId === ac.id);
+  console.log(`Returning ${filtered.length} components for ${ac.registration} (${cacheComponents.length > 0 ? 'from cache' : 'seeded data'})`);
+  return filtered;
 }
 
 export async function getComplianceForAircraft(ac: Aircraft): Promise<ComplianceRecord[]> {
