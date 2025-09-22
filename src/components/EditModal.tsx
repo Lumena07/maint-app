@@ -23,6 +23,7 @@ export const EditModal = ({ isOpen, onClose, item, type, onSave }: EditModalProp
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('EditModal - handleSubmit called with formData:', formData);
     onSave(formData);
     onClose();
   };

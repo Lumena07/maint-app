@@ -460,8 +460,10 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
   };
 
   const handleSave = async (item: MaintenanceTask | Component) => {
+    console.log('handleSave called with item:', item.id, item.title);
     try {
       const endpoint = item.id.startsWith('task-') ? "/api/tasks" : "/api/components";
+      console.log('handleSave - Using endpoint:', endpoint);
       const response = await fetch(endpoint, {
         method: "PUT",
         headers: {
@@ -469,6 +471,9 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
         },
         body: JSON.stringify(item),
       });
+      
+      console.log('handleSave - Response status:', response.status);
+      console.log('handleSave - Response ok:', response.ok);
       
       if (response.ok) {
         // Calculate and save projected days after successful save
