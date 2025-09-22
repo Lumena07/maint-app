@@ -460,7 +460,8 @@ export const TasksComponentsTable = ({ aircraft, tasks, components, onDataUpdate
   };
 
   const handleSave = async (item: MaintenanceTask | Component) => {
-    console.log('handleSave called with item:', item.id, item.title);
+    const title = 'title' in item ? item.title : item.name || 'Unknown';
+    console.log('handleSave called with item:', item.id, title);
     try {
       const endpoint = item.id.startsWith('task-') ? "/api/tasks" : "/api/components";
       console.log('handleSave - Using endpoint:', endpoint);
