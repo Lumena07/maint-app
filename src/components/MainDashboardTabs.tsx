@@ -188,6 +188,15 @@ export const MainDashboardTabs = ({ aircraft }: MainDashboardTabsProps) => {
     loadAddRecords();
   }, []);
 
+  // Sync aircraftList state with aircraft props
+  useEffect(() => {
+    console.log('MainDashboardTabs - Props changed, syncing state with props');
+    console.log('  - Props aircraft isGrounded:', aircraft[0]?.groundingStatus?.isGrounded);
+    console.log('  - State aircraftList isGrounded:', aircraftList[0]?.groundingStatus?.isGrounded);
+    
+    setAircraftList(aircraft);
+  }, [aircraft]);
+
   const tabs = [
     { id: "fleet" as Tab, label: "Fleet Management" },
     { id: "snags" as Tab, label: "Snags Tracking" },
