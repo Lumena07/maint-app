@@ -129,9 +129,11 @@ export async function POST(request: NextRequest) {
       console.log('Ungrounding - Current record:', aircraft.groundingStatus?.currentRecord);
 
       const currentRecord = aircraft.groundingStatus?.currentRecord;
-      if (!currentRecord) {
-        console.log('Ungrounding - No current record found, aircraft is already ungrounded');
-        return NextResponse.json({ error: 'Aircraft is already ungrounded' }, { status: 400 });
+      
+      // If aircraft is already ungrounded, just return the current state
+      if (!currentRecord || !aircraft.groundingStatus?.isGrounded) {
+        console.log('Ungrounding - Aircraft is already ungrounded, returning current state');
+        return NextResponse.json(aircraft);
       }
       
       if (currentRecord.id !== recordId) {
@@ -148,6 +150,12 @@ export async function POST(request: NextRequest) {
         updatedAt: new Date().toISOString()
       };
 
+      // Store the completed grounding record in the groundingRecords array
+      if (!cache.groundingRecords) {
+        cache.groundingRecords = [];
+      }
+      cache.groundingRecords.push(updatedRecord);
+
       // Update aircraft grounding status
       const groundingStatus: GroundingStatus = {
         isGrounded: false,
@@ -162,13 +170,6 @@ export async function POST(request: NextRequest) {
         groundingStatus,
         status: 'In Service' as const
       };
-
-      // Store the completed grounding record in the groundingRecords array
-      if (!cache.groundingRecords) {
-        cache.groundingRecords = [];
-      }
-      cache.groundingRecords.push(updatedRecord);
-
     } else {
       return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
