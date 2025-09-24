@@ -175,6 +175,8 @@ export const GroundingManagement = ({ aircraft, onAircraftUpdate }: GroundingMan
 
     setIsSaving(true);
     try {
+      console.log('UNGROUNDING - Starting ungrounding process');
+      
       const response = await fetch('/api/aircraft/grounding', {
         method: 'POST',
         headers: {
@@ -192,11 +194,36 @@ export const GroundingManagement = ({ aircraft, onAircraftUpdate }: GroundingMan
       }
 
       const updatedAircraft = await response.json();
+      console.log('UNGROUNDING - API returned updated aircraft');
+      
+      // Update local state immediately
       setCurrentAircraft(updatedAircraft);
       
       if (onAircraftUpdate) {
         onAircraftUpdate(updatedAircraft);
       }
+
+      // Force refresh from blob after a short delay to ensure blob is updated
+      setTimeout(async () => {
+        console.log('UNGROUNDING - Auto-refreshing from blob...');
+        try {
+          const refreshResponse = await fetch(`/api/aircraft?t=${Date.now()}`);
+          if (refreshResponse.ok) {
+            const freshAircraft = await refreshResponse.json();
+            console.log('UNGROUNDING - Fresh data from blob:', freshAircraft.length, 'aircraft');
+            
+            // Update with fresh data from blob
+            setCurrentAircraft(freshAircraft[0]); // Assuming single aircraft
+            
+            if (onAircraftUpdate) {
+              onAircraftUpdate(freshAircraft[0]);
+            }
+          }
+        } catch (error) {
+          console.error('UNGROUNDING - Error refreshing from blob:', error);
+        }
+      }, 2000); // Wait 2 seconds for blob to be updated
+
     } catch (error) {
       console.error('Error ungrounding aircraft:', error);
       alert('Failed to unground aircraft. Please try again.');
