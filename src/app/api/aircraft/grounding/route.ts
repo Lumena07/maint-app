@@ -39,9 +39,17 @@ export async function POST(request: NextRequest) {
   console.log("Grounding API called with method:", request.method);
   console.log("Request URL:", request.url);
   try {
-    const requestBody = await request.clone().json();
-    console.log("Request body:", requestBody);
-    console.log("Request body:", await request.clone().json());
+    console.log("POST - Starting request processing");
+    
+    let requestBody;
+    try {
+      requestBody = await request.clone().json();
+      console.log("Request body:", requestBody);
+    } catch (jsonError) {
+      console.error("POST - Error parsing request JSON:", jsonError);
+      return NextResponse.json({ error: 'Invalid JSON in request body' }, { status: 400 });
+    }
+    
     const body = await request.json();
     const { aircraftId, action, record, recordId } = body;
 
@@ -174,8 +182,17 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const requestBody = await request.clone().json();
-    console.log("PUT Request body:", requestBody);
+    console.log("PUT - Starting request processing");
+    
+    let requestBody;
+    try {
+      requestBody = await request.clone().json();
+      console.log("PUT Request body:", requestBody);
+    } catch (jsonError) {
+      console.error("PUT - Error parsing request JSON:", jsonError);
+      return NextResponse.json({ error: 'Invalid JSON in request body' }, { status: 400 });
+    }
+    
     const body = await request.json();
     const { aircraftId, recordId, updates } = body;
 
@@ -187,10 +204,21 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Aircraft ID and Record ID are required' }, { status: 400 });
     }
 
-    const cache = await readCache();
-    console.log('PUT - Cache loaded:', { 
-      aircraftCount: cache.aircraft?.length || 0
-    });
+    let cache;
+    try {
+      cache = await readCache();
+      console.log('PUT - Cache loaded:', { 
+        aircraftCount: cache.aircraft?.length || 0
+      });
+    } catch (cacheError) {
+      console.error("PUT - Error reading cache:", cacheError);
+      return NextResponse.json({ error: 'Failed to load aircraft data' }, { status: 500 });
+    }
+    
+    if (!cache || !cache.aircraft) {
+      console.error("PUT - Cache is null or missing aircraft array");
+      return NextResponse.json({ error: 'Aircraft data not available' }, { status: 500 });
+    }
     
     const aircraftIndex = cache.aircraft.findIndex((a: Aircraft) => a.id === aircraftId);
 
@@ -243,15 +271,26 @@ export async function PUT(request: NextRequest) {
       groundingStatus
     };
 
-    const success = await writeCache(cache);
+    let success;
+    try {
+      success = await writeCache(cache);
+      console.log('PUT - Write cache result:', success);
+    } catch (writeError) {
+      console.error("PUT - Error writing cache:", writeError);
+      return NextResponse.json({ error: 'Failed to save data' }, { status: 500 });
+    }
+    
     if (!success) {
+      console.error("PUT - Write cache returned false");
       return NextResponse.json({ error: 'Failed to save data' }, { status: 500 });
     }
 
+    console.log('PUT - Successfully updated grounding record');
     return NextResponse.json(cache.aircraft[aircraftIndex]);
 
   } catch (error) {
-    console.error('Error updating grounding record:', error);
+    console.error('PUT - Unexpected error updating grounding record:', error);
+    console.error('PUT - Error stack:', error.stack);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
