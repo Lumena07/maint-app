@@ -163,6 +163,12 @@ export async function POST(request: NextRequest) {
         status: 'In Service' as const
       };
 
+      // Store the completed grounding record in the groundingRecords array
+      if (!cache.groundingRecords) {
+        cache.groundingRecords = [];
+      }
+      cache.groundingRecords.push(updatedRecord);
+
     } else {
       return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
@@ -238,19 +244,31 @@ export async function PUT(request: NextRequest) {
     const currentRecord = aircraft.groundingStatus?.currentRecord;
     console.log('PUT - Current record:', currentRecord);
 
+    let recordToUpdate: GroundingRecord | undefined = currentRecord;
+    let isCurrentRecord = true;
+
+    // If no current record, search in historical records
     if (!currentRecord) {
-      console.log('PUT - No current record found');
-      return NextResponse.json({ error: 'No current grounding record found' }, { status: 404 });
+      console.log('PUT - No current record found, searching historical records');
+      const historicalRecords = cache.groundingRecords || [];
+      recordToUpdate = historicalRecords.find((r: GroundingRecord) => r.id === recordId && r.aircraftId === aircraftId);
+      isCurrentRecord = false;
+      console.log('PUT - Historical record found:', !!recordToUpdate);
+    }
+
+    if (!recordToUpdate) {
+      console.log('PUT - No grounding record found');
+      return NextResponse.json({ error: 'Grounding record not found' }, { status: 404 });
     }
     
-    if (currentRecord.id !== recordId) {
-      console.log('PUT - Record ID mismatch:', { expected: recordId, actual: currentRecord.id });
+    if (recordToUpdate.id !== recordId) {
+      console.log('PUT - Record ID mismatch:', { expected: recordId, actual: recordToUpdate.id });
       return NextResponse.json({ error: 'Grounding record not found' }, { status: 404 });
     }
 
     // Update the grounding record
     const updatedRecord: GroundingRecord = {
-      ...currentRecord,
+      ...recordToUpdate,
       ...updates,
       updatedAt: new Date().toISOString()
     };
@@ -260,16 +278,26 @@ export async function PUT(request: NextRequest) {
       updatedRecord.daysOnGround = calculateDaysOnGround(updates.groundingDate);
     }
 
-    // Update aircraft grounding status
-    const groundingStatus: GroundingStatus = {
-      ...aircraft.groundingStatus,
-      currentRecord: updatedRecord
-    };
+    if (isCurrentRecord) {
+      // Update current record
+      const groundingStatus: GroundingStatus = {
+        ...aircraft.groundingStatus,
+        currentRecord: updatedRecord
+      };
 
-    cache.aircraft[aircraftIndex] = {
-      ...aircraft,
-      groundingStatus
-    };
+      cache.aircraft[aircraftIndex] = {
+        ...aircraft,
+        groundingStatus
+      };
+    } else {
+      // Update historical record
+      const historicalRecords = cache.groundingRecords || [];
+      const recordIndex = historicalRecords.findIndex((r: GroundingRecord) => r.id === recordId);
+      if (recordIndex !== -1) {
+        historicalRecords[recordIndex] = updatedRecord;
+        cache.groundingRecords = historicalRecords;
+      }
+    }
 
     let success;
     try {
