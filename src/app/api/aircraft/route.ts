@@ -33,10 +33,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  // Implementation for updating individual aircraft
+export async function PUT(request: NextRequest) {
+  // Implementation for updating aircraft list
   return NextResponse.json({ error: "Not implemented" }, { status: 501 });
 } 
