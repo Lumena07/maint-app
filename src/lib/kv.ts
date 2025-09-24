@@ -61,7 +61,6 @@ export async function writeCache(data: CacheData): Promise<boolean> {
     const blob = await put(CACHE_BLOB_PATH, jsonString, {
       access: 'public',
       allowOverwrite: true, // Allow overwriting the existing cache file
-      cacheControlMaxAge: 60, // Cache for 1 minute to allow updates
     });
 
     console.log(`writeCache - Blob URL: ${blob.url}`);
