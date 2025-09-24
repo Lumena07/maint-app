@@ -80,13 +80,27 @@ export async function POST(request: NextRequest) {
     });
 
     if (action === 'ground') {
+      console.log('GROUNDING - Starting grounding process');
+      console.log('GROUNDING - Record data received:', record);
+      
       if (!record) {
+        console.log('GROUNDING - ERROR: No record data provided');
         return NextResponse.json({ error: 'Grounding record is required' }, { status: 400 });
       }
 
+      console.log('GROUNDING - Aircraft current state before grounding:');
+      console.log('GROUNDING - Aircraft ID:', aircraft.id);
+      console.log('GROUNDING - Aircraft name:', aircraft.name);
+      console.log('GROUNDING - Current grounding status:', aircraft.groundingStatus);
+      console.log('GROUNDING - Current aircraft status:', aircraft.status);
+
+      // Generate new record ID
+      const newRecordId = generateId();
+      console.log('GROUNDING - Generated new record ID:', newRecordId);
+
       // Create new grounding record
       const newRecord: GroundingRecord = {
-        id: generateId(),
+        id: newRecordId,
         aircraftId,
         isGrounded: true,
         groundingDate: record.groundingDate || new Date().toISOString().split('T')[0],
@@ -103,20 +117,67 @@ export async function POST(request: NextRequest) {
         updatedAt: new Date().toISOString()
       };
 
+      console.log('GROUNDING - Created new grounding record:');
+      console.log('GROUNDING - Record ID:', newRecord.id);
+      console.log('GROUNDING - Aircraft ID:', newRecord.aircraftId);
+      console.log('GROUNDING - Is Grounded:', newRecord.isGrounded);
+      console.log('GROUNDING - Grounding Date:', newRecord.groundingDate);
+      console.log('GROUNDING - Reason:', newRecord.reason);
+      console.log('GROUNDING - Description:', newRecord.description);
+      console.log('GROUNDING - Plan of Action:', newRecord.planOfAction);
+      console.log('GROUNDING - Spare Parts Required:', newRecord.sparePartsRequired);
+      console.log('GROUNDING - Spare Status:', newRecord.spareStatus);
+      console.log('GROUNDING - Estimated Ungrounding Date:', newRecord.estimatedUngroundingDate);
+      console.log('GROUNDING - Days on Ground:', newRecord.daysOnGround);
+      console.log('GROUNDING - Created At:', newRecord.createdAt);
+      console.log('GROUNDING - Updated At:', newRecord.updatedAt);
+
+      // Calculate previous total days grounded
+      const previousTotalDays = aircraft.groundingStatus?.totalDaysGrounded || 0;
+      console.log('GROUNDING - Previous total days grounded:', previousTotalDays);
+
       // Update aircraft grounding status
       const groundingStatus: GroundingStatus = {
         isGrounded: true,
         currentRecord: newRecord,
-        totalDaysGrounded: (aircraft.groundingStatus?.totalDaysGrounded || 0),
+        totalDaysGrounded: previousTotalDays,
         lastGroundedDate: newRecord.groundingDate,
         lastUngroundedDate: aircraft.groundingStatus?.lastUngroundedDate
       };
 
-      cache.aircraft[aircraftIndex] = {
+      console.log('GROUNDING - Created new grounding status:');
+      console.log('GROUNDING - Is Grounded:', groundingStatus.isGrounded);
+      console.log('GROUNDING - Has Current Record:', !!groundingStatus.currentRecord);
+      console.log('GROUNDING - Current Record ID:', groundingStatus.currentRecord?.id);
+      console.log('GROUNDING - Total Days Grounded:', groundingStatus.totalDaysGrounded);
+      console.log('GROUNDING - Last Grounded Date:', groundingStatus.lastGroundedDate);
+      console.log('GROUNDING - Last Ungrounded Date:', groundingStatus.lastUngroundedDate);
+
+      // Update aircraft in cache
+      const updatedAircraft = {
         ...aircraft,
         groundingStatus,
         status: 'Out of Service' as const
       };
+
+      console.log('GROUNDING - Updated aircraft object:');
+      console.log('GROUNDING - Aircraft ID:', updatedAircraft.id);
+      console.log('GROUNDING - Aircraft Status:', updatedAircraft.status);
+      console.log('GROUNDING - Has Grounding Status:', !!updatedAircraft.groundingStatus);
+      console.log('GROUNDING - Is Grounded:', updatedAircraft.groundingStatus?.isGrounded);
+      console.log('GROUNDING - Has Current Record:', !!updatedAircraft.groundingStatus?.currentRecord);
+
+      cache.aircraft[aircraftIndex] = updatedAircraft;
+
+      console.log('GROUNDING - Updated cache aircraft at index:', aircraftIndex);
+      console.log('GROUNDING - Cache aircraft count after update:', cache.aircraft.length);
+      console.log('GROUNDING - Final aircraft in cache:');
+      console.log('GROUNDING - Cache aircraft ID:', cache.aircraft[aircraftIndex].id);
+      console.log('GROUNDING - Cache aircraft status:', cache.aircraft[aircraftIndex].status);
+      console.log('GROUNDING - Cache aircraft isGrounded:', cache.aircraft[aircraftIndex].groundingStatus?.isGrounded);
+      console.log('GROUNDING - Cache aircraft currentRecord ID:', cache.aircraft[aircraftIndex].groundingStatus?.currentRecord?.id);
+
+      console.log('GROUNDING - Grounding process completed successfully');
 
     } else if (action === 'unground') {
       if (!recordId) {
