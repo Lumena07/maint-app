@@ -32,8 +32,9 @@ export async function readCache(): Promise<CacheData | null> {
     }
 
     console.log(`readCache - Blob URL: ${blobInfo.url}`);
-    // Fetch the blob content
-    const response = await fetch(blobInfo.url);
+    // Fetch the blob content with cache busting
+    const cacheBustedUrl = `${blobInfo.url}?t=${Date.now()}`;
+    const response = await fetch(cacheBustedUrl);
     if (!response.ok) {
       console.error(`readCache - Failed to fetch blob: ${response.status}`);
       return null;
