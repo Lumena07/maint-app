@@ -126,10 +126,29 @@ export const MainDashboardTabs = ({ aircraft }: MainDashboardTabsProps) => {
     notes: ""
   });
 
-  const handleAircraftUpdate = (updatedAircraft: Aircraft) => {
+  const handleAircraftUpdate = async (updatedAircraft: Aircraft) => {
+    console.log('MainDashboardTabs - Aircraft update received:', updatedAircraft.id);
+    console.log('MainDashboardTabs - Updated aircraft grounding status:', updatedAircraft.groundingStatus);
+    
+    // Update local state immediately for responsive UI
     setAircraftList(prev => 
       prev.map(ac => ac.id === updatedAircraft.id ? updatedAircraft : ac)
     );
+    
+    // Also refresh the entire aircraft list from the blob to ensure consistency
+    try {
+      console.log('MainDashboardTabs - Refreshing aircraft list from blob...');
+      const response = await fetch('/api/aircraft');
+      if (response.ok) {
+        const refreshedAircraft = await response.json();
+        console.log('MainDashboardTabs - Refreshed aircraft list:', refreshedAircraft.length, 'aircraft');
+        setAircraftList(refreshedAircraft);
+      } else {
+        console.error('MainDashboardTabs - Failed to refresh aircraft list');
+      }
+    } catch (error) {
+      console.error('MainDashboardTabs - Error refreshing aircraft list:', error);
+    }
   };
 
   // Load snags and AD/SB records on component mount
