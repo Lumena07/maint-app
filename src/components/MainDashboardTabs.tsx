@@ -129,26 +129,23 @@ export const MainDashboardTabs = ({ aircraft }: MainDashboardTabsProps) => {
 
   const handleAircraftUpdate = async (updatedAircraft: Aircraft) => {
     console.log('MainDashboardTabs - Aircraft update received:', updatedAircraft.id);
-    console.log('MainDashboardTabs - Updated aircraft grounding status:', updatedAircraft.groundingStatus);
     
-    // Update local state immediately for responsive UI
+    // Update local state immediately
     setAircraftList(prev => 
       prev.map(ac => ac.id === updatedAircraft.id ? updatedAircraft : ac)
     );
     
-    // Also refresh the entire aircraft list from the blob to ensure consistency
+    // Force refresh from blob with cache busting
     try {
-      console.log('MainDashboardTabs - Refreshing aircraft list from blob...');
-      const response = await fetch('/api/aircraft');
+      console.log('MainDashboardTabs - Force refreshing from blob...');
+      const response = await fetch(`/api/aircraft?t=${Date.now()}`); // Cache busting
       if (response.ok) {
         const refreshedAircraft = await response.json();
-        console.log('MainDashboardTabs - Refreshed aircraft list:', refreshedAircraft.length, 'aircraft');
+        console.log('MainDashboardTabs - Fresh data from blob:', refreshedAircraft.length, 'aircraft');
         setAircraftList(refreshedAircraft);
-      } else {
-        console.error('MainDashboardTabs - Failed to refresh aircraft list');
       }
     } catch (error) {
-      console.error('MainDashboardTabs - Error refreshing aircraft list:', error);
+      console.error('MainDashboardTabs - Error refreshing:', error);
     }
   };
 

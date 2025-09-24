@@ -36,7 +36,7 @@ const seededAssemblies: Assembly[] = [];
 const seededCompliance: ComplianceRecord[] = [];
 const seededComponents: Component[] = [];
 
-// Cache variables
+// Cache variables - these are in-memory on the server
 let cacheLoaded = false;
 let cacheAircraft: Aircraft[] = [];
 let cacheTasks: MaintenanceTask[] = [];
@@ -46,7 +46,10 @@ let lastCacheLoad = 0;
 // Function to force cache refresh
 export async function refreshCache(): Promise<void> {
   lastCacheLoad = 0; // Reset cache load time to force refresh
-  await loadCacheIfAvailable();
+  cacheAircraft = [];
+  cacheTasks = [];
+  cacheComponents = [];
+  console.log('🔄 Cache forcefully cleared - next load will fetch fresh data');
 }
 
 async function loadCacheIfAvailable() {
