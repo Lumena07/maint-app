@@ -175,26 +175,48 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const requestBody = await request.clone().json();
-    console.log("Request body:", requestBody);
-    console.log("Request body:", await request.clone().json());
+    console.log("PUT Request body:", requestBody);
     const body = await request.json();
     const { aircraftId, recordId, updates } = body;
+
+    console.log('PUT - Aircraft ID:', aircraftId);
+    console.log('PUT - Record ID:', recordId);
+    console.log('PUT - Updates:', updates);
 
     if (!aircraftId || !recordId) {
       return NextResponse.json({ error: 'Aircraft ID and Record ID are required' }, { status: 400 });
     }
 
     const cache = await readCache();
+    console.log('PUT - Cache loaded:', { 
+      aircraftCount: cache.aircraft?.length || 0
+    });
+    
     const aircraftIndex = cache.aircraft.findIndex((a: Aircraft) => a.id === aircraftId);
 
     if (aircraftIndex === -1) {
+      console.log('PUT - Aircraft not found:', aircraftId);
       return NextResponse.json({ error: 'Aircraft not found' }, { status: 404 });
     }
 
     const aircraft = cache.aircraft[aircraftIndex];
+    console.log('PUT - Aircraft found:', { 
+      id: aircraft.id, 
+      name: aircraft.name,
+      hasGroundingStatus: !!aircraft.groundingStatus,
+      isGrounded: aircraft.groundingStatus?.isGrounded
+    });
+    
     const currentRecord = aircraft.groundingStatus?.currentRecord;
+    console.log('PUT - Current record:', currentRecord);
 
-    if (!currentRecord || currentRecord.id !== recordId) {
+    if (!currentRecord) {
+      console.log('PUT - No current record found');
+      return NextResponse.json({ error: 'No current grounding record found' }, { status: 404 });
+    }
+    
+    if (currentRecord.id !== recordId) {
+      console.log('PUT - Record ID mismatch:', { expected: recordId, actual: currentRecord.id });
       return NextResponse.json({ error: 'Grounding record not found' }, { status: 404 });
     }
 
