@@ -290,7 +290,9 @@ export async function PUT(request: NextRequest) {
 
   } catch (error) {
     console.error('PUT - Unexpected error updating grounding record:', error);
-    console.error('PUT - Error stack:', error.stack);
+    if (error instanceof Error) {
+      console.error('PUT - Error stack:', error.stack);
+    }
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
