@@ -24,9 +24,8 @@ const CACHE_FILE_PATH = path.join(process.cwd(), 'public', 'aca-cache.json');
 export async function readCache(): Promise<CacheData | null> {
   try {
     console.log('readCache - Reading from Blob...');
-    // Check if blob exists with cache busting
-    const cacheBustedPath = `${CACHE_BLOB_PATH}?t=${Date.now()}`;
-    const blobInfo = await head(cacheBustedPath);
+    // Check if blob exists (don't add cache busting to head call)
+    const blobInfo = await head(CACHE_BLOB_PATH);
     if (!blobInfo) {
       console.log('readCache - No blob found');
       return null;
