@@ -141,18 +141,8 @@ export const MainDashboardTabs = ({ aircraft }: MainDashboardTabsProps) => {
       prev.map(ac => ac.id === updatedAircraft.id ? updatedAircraft : ac)
     );
     
-    // Force refresh from blob with cache busting
-    try {
-      console.log('MainDashboardTabs - Force refreshing from blob...');
-      const response = await fetch(`/api/aircraft?t=${Date.now()}`); // Cache busting
-      if (response.ok) {
-        const refreshedAircraft = await response.json();
-        console.log('MainDashboardTabs - Fresh data from blob:', refreshedAircraft.length, 'aircraft');
-        setAircraftList(refreshedAircraft);
-      }
-    } catch (error) {
-      console.error('MainDashboardTabs - Error refreshing:', error);
-    }
+    // Remove the immediate refresh - let the delayed refresh handle it
+    // The GroundingManagement component will handle the delayed refresh after 5 seconds
   };
 
   // Load snags and AD/SB records on component mount
