@@ -50,13 +50,26 @@ export async function POST(request: NextRequest) {
     }
 
     const cache = await readCache();
+    console.log('Grounding API - Cache loaded:', { 
+      aircraftCount: cache.aircraft?.length || 0,
+      hasGroundingRecords: !!cache.groundingRecords,
+      groundingRecordsCount: cache.groundingRecords?.length || 0
+    });
+    
     const aircraftIndex = cache.aircraft.findIndex((a: Aircraft) => a.id === aircraftId);
 
     if (aircraftIndex === -1) {
+      console.log('Grounding API - Aircraft not found:', aircraftId);
       return NextResponse.json({ error: 'Aircraft not found' }, { status: 404 });
     }
 
     const aircraft = cache.aircraft[aircraftIndex];
+    console.log('Grounding API - Aircraft found:', { 
+      id: aircraft.id, 
+      name: aircraft.name,
+      hasGroundingStatus: !!aircraft.groundingStatus,
+      isGrounded: aircraft.groundingStatus?.isGrounded
+    });
 
     if (action === 'ground') {
       if (!record) {
@@ -102,8 +115,19 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Record ID is required for ungrounding' }, { status: 400 });
       }
 
+      console.log('Ungrounding - Aircraft ID:', aircraftId);
+      console.log('Ungrounding - Record ID:', recordId);
+      console.log('Ungrounding - Aircraft grounding status:', aircraft.groundingStatus);
+      console.log('Ungrounding - Current record:', aircraft.groundingStatus?.currentRecord);
+
       const currentRecord = aircraft.groundingStatus?.currentRecord;
-      if (!currentRecord || currentRecord.id !== recordId) {
+      if (!currentRecord) {
+        console.log('Ungrounding - No current record found, aircraft is already ungrounded');
+        return NextResponse.json({ error: 'Aircraft is already ungrounded' }, { status: 400 });
+      }
+      
+      if (currentRecord.id !== recordId) {
+        console.log('Ungrounding - Record ID mismatch:', { expected: recordId, actual: currentRecord.id });
         return NextResponse.json({ error: 'Current grounding record not found' }, { status: 404 });
       }
 
@@ -119,7 +143,7 @@ export async function POST(request: NextRequest) {
       // Update aircraft grounding status
       const groundingStatus: GroundingStatus = {
         isGrounded: false,
-        currentRecord: updatedRecord,
+        currentRecord: null, // Clear current record when ungrounded
         totalDaysGrounded: (aircraft.groundingStatus?.totalDaysGrounded || 0) + updatedRecord.daysOnGround!,
         lastGroundedDate: aircraft.groundingStatus?.lastGroundedDate,
         lastUngroundedDate: updatedRecord.ungroundingDate

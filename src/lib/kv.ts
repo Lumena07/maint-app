@@ -1,4 +1,6 @@
 import { put, head, del } from '@vercel/blob';
+import fs from 'fs';
+import path from 'path';
 
 export interface CacheData {
   aircraft: any[];
@@ -14,6 +16,7 @@ export interface CacheData {
 }
 
 const CACHE_BLOB_PATH = 'aircraft-cache.json';
+const CACHE_FILE_PATH = path.join(process.cwd(), 'public', 'aca-cache.json');
 
 /**
  * Read cache data from Vercel Blob
@@ -41,6 +44,20 @@ export async function readCache(): Promise<CacheData | null> {
     return data;
   } catch (error) {
     console.error('readCache - Error reading from Blob:', error);
+    console.log('readCache - Falling back to local file...');
+    
+    // Fallback to local file
+    try {
+      if (fs.existsSync(CACHE_FILE_PATH)) {
+        const fileContent = fs.readFileSync(CACHE_FILE_PATH, 'utf8');
+        const data = JSON.parse(fileContent);
+        console.log(`readCache - Loaded from local file with ${data.tasks?.length || 0} tasks`);
+        return data;
+      }
+    } catch (fileError) {
+      console.error('readCache - Error reading local file:', fileError);
+    }
+    
     return null;
   }
 }
@@ -65,7 +82,18 @@ export async function writeCache(data: CacheData): Promise<boolean> {
     return !!blob.url;
   } catch (error) {
     console.error('writeCache - Error writing to Blob:', error);
-    return false;
+    console.log('writeCache - Falling back to local file...');
+    
+    // Fallback to local file
+    try {
+      const jsonString = JSON.stringify(data, null, 2);
+      fs.writeFileSync(CACHE_FILE_PATH, jsonString, 'utf8');
+      console.log('writeCache - Successfully wrote to local file');
+      return true;
+    } catch (fileError) {
+      console.error('writeCache - Error writing to local file:', fileError);
+      return false;
+    }
   }
 }
 
