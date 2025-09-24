@@ -202,6 +202,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Current grounding record not found' }, { status: 404 });
       }
 
+      console.log('Ungrounding - Proceeding with ungrounding...');
+
       // Update the grounding record
       const updatedRecord: GroundingRecord = {
         ...currentRecord,
@@ -211,11 +213,14 @@ export async function POST(request: NextRequest) {
         updatedAt: new Date().toISOString()
       };
 
+      console.log('Ungrounding - Updated record:', updatedRecord);
+
       // Store the completed grounding record in the groundingRecords array
       if (!cache.groundingRecords) {
         cache.groundingRecords = [];
       }
       cache.groundingRecords.push(updatedRecord);
+      console.log('Ungrounding - Added to groundingRecords, count:', cache.groundingRecords.length);
 
       // Update aircraft grounding status
       const groundingStatus: GroundingStatus = {
@@ -226,11 +231,20 @@ export async function POST(request: NextRequest) {
         lastUngroundedDate: updatedRecord.ungroundingDate
       };
 
+      console.log('Ungrounding - New grounding status:', groundingStatus);
+
       cache.aircraft[aircraftIndex] = {
         ...aircraft,
         groundingStatus,
         status: 'In Service' as const
       };
+
+      console.log('Ungrounding - Updated aircraft in cache:', {
+        id: cache.aircraft[aircraftIndex].id,
+        status: cache.aircraft[aircraftIndex].status,
+        isGrounded: cache.aircraft[aircraftIndex].groundingStatus?.isGrounded,
+        hasCurrentRecord: !!cache.aircraft[aircraftIndex].groundingStatus?.currentRecord
+      });
     } else {
       return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
