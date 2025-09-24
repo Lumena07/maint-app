@@ -184,7 +184,7 @@ export const GroundingManagement = ({ aircraft, onAircraftUpdate }: GroundingMan
         } catch (error) {
           console.error('GROUNDING - Error refreshing from blob:', error);
         }
-      }, 2000);
+      }, 5000); // Change from 2000 to 5000 (5 seconds)
 
     } catch (error) {
       console.error('Error grounding aircraft:', error);
