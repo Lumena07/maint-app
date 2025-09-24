@@ -19,6 +19,12 @@ export const MainDashboardTabs = ({ aircraft }: MainDashboardTabsProps) => {
   const [addRecords, setAddRecords] = useState<ADD[]>([]);
   const [monthlyHours, setMonthlyHours] = useState<{[key: string]: number}>({});
   
+  // Add this debugging right after the state declaration
+  console.log('MainDashboardTabs - Component rendered with:');
+  console.log('  - Props aircraft:', aircraft);
+  console.log('  - State aircraftList:', aircraftList);
+  console.log('  - Are they the same?', aircraft === aircraftList);
+  
   // Function to calculate monthly hours for each aircraft
   const calculateMonthlyHours = async () => {
     const currentMonth = new Date().getMonth();

@@ -24,6 +24,14 @@ const calculateNextDueDate = (lastDoneDate: string, intervalYears: number): stri
 };
 
 export const AircraftCard = ({ aircraft, onAircraftUpdate }: { aircraft: Aircraft; onAircraftUpdate?: (updatedAircraft: Aircraft) => void }) => {
+  // Add this at the very beginning of the component
+  console.log('AircraftCard - Component rendered with aircraft:', {
+    id: aircraft.id,
+    registration: aircraft.registration,
+    status: aircraft.status,
+    isGrounded: aircraft.groundingStatus?.isGrounded,
+    hasCurrentRecord: !!aircraft.groundingStatus?.currentRecord
+  });
   const [isGroundingModalOpen, setIsGroundingModalOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -102,6 +110,15 @@ export const AircraftCard = ({ aircraft, onAircraftUpdate }: { aircraft: Aircraf
   // Check grounding status
   const isGrounded = aircraft.groundingStatus?.isGrounded || false;
   const groundingRecord = aircraft.groundingStatus?.currentRecord;
+  
+  // Add this debugging
+  console.log('AircraftCard - Grounding evaluation:', {
+    aircraftId: aircraft.id,
+    groundingStatus: aircraft.groundingStatus,
+    isGrounded: isGrounded,
+    groundingRecord: groundingRecord,
+    hasCurrentRecord: !!groundingRecord
+  });
   const daysOnGround = groundingRecord?.groundingDate 
     ? Math.ceil((new Date().getTime() - new Date(groundingRecord.groundingDate).getTime()) / (1000 * 60 * 60 * 24))
     : 0;
