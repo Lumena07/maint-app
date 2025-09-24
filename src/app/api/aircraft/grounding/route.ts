@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
       // Update aircraft grounding status
       const groundingStatus: GroundingStatus = {
         isGrounded: false,
-        currentRecord: null, // Clear current record when ungrounded
+        currentRecord: undefined, // Clear current record when ungrounded
         totalDaysGrounded: (aircraft.groundingStatus?.totalDaysGrounded || 0) + updatedRecord.daysOnGround!,
         lastGroundedDate: aircraft.groundingStatus?.lastGroundedDate,
         lastUngroundedDate: updatedRecord.ungroundingDate
