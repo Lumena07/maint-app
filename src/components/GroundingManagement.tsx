@@ -122,22 +122,9 @@ export const GroundingManagement = ({ aircraft, onAircraftUpdate }: GroundingMan
   const handleGroundAircraft = async () => {
     setIsSaving(true);
     try {
-      const newRecord: Partial<GroundingRecord> = {
-        aircraftId: aircraft.id,
-        isGrounded: true,
-        groundingDate: new Date().toISOString().split('T')[0],
-        reason: formData.reason,
-        description: formData.description,
-        planOfAction: formData.planOfAction,
-        sparePartsRequired: formData.sparePartsRequired || false,
-        spareStatus: formData.spareStatus || "Not Required",
-        spareOrderDate: formData.spareOrderDate,
-        spareExpectedDate: formData.spareExpectedDate,
-        estimatedUngroundingDate: formData.estimatedUngroundingDate,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-
+      console.log('GROUNDING - Starting grounding process');
+      console.log('GROUNDING - Form data:', formData);
+      
       const response = await fetch('/api/aircraft/grounding', {
         method: 'POST',
         headers: {
@@ -146,25 +133,62 @@ export const GroundingManagement = ({ aircraft, onAircraftUpdate }: GroundingMan
         body: JSON.stringify({
           aircraftId: aircraft.id,
           action: 'ground',
-          record: newRecord
+          record: formData
         }),
       });
 
+      console.log('GROUNDING - API response status:', response.status);
+      console.log('GROUNDING - API response ok:', response.ok);
+
       if (!response.ok) {
-        throw new Error('Failed to ground aircraft');
+        const errorText = await response.text();
+        console.error('GROUNDING - API error response:', errorText);
+        throw new Error(`Failed to ground aircraft: ${response.status} ${errorText}`);
       }
 
       const updatedAircraft = await response.json();
+      console.log('GROUNDING - API returned updated aircraft:', {
+        id: updatedAircraft.id,
+        status: updatedAircraft.status,
+        isGrounded: updatedAircraft.groundingStatus?.isGrounded,
+        hasCurrentRecord: !!updatedAircraft.groundingStatus?.currentRecord
+      });
+      
       setCurrentAircraft(updatedAircraft);
+      console.log('GROUNDING - Updated local aircraft state');
       
       if (onAircraftUpdate) {
+        console.log('GROUNDING - Calling onAircraftUpdate callback');
         onAircraftUpdate(updatedAircraft);
+      } else {
+        console.log('GROUNDING - No onAircraftUpdate callback provided');
       }
 
-      handleCloseModal();
+      // Force refresh from blob after a short delay
+      setTimeout(async () => {
+        console.log('GROUNDING - Auto-refreshing from blob...');
+        try {
+          const refreshResponse = await fetch(`/api/aircraft?t=${Date.now()}`);
+          if (refreshResponse.ok) {
+            const freshAircraft = await refreshResponse.json();
+            console.log('GROUNDING - Fresh data from blob:', freshAircraft.length, 'aircraft');
+            console.log('GROUNDING - Blob aircraft isGrounded:', freshAircraft[0]?.groundingStatus?.isGrounded);
+            
+            // Update with fresh data from blob
+            setCurrentAircraft(freshAircraft[0]);
+            
+            if (onAircraftUpdate) {
+              onAircraftUpdate(freshAircraft[0]);
+            }
+          }
+        } catch (error) {
+          console.error('GROUNDING - Error refreshing from blob:', error);
+        }
+      }, 2000);
+
     } catch (error) {
       console.error('Error grounding aircraft:', error);
-      alert('Failed to ground aircraft. Please try again.');
+      alert(`Failed to ground aircraft: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsSaving(false);
     }
