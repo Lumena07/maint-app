@@ -43,27 +43,9 @@
       "survivalKitNextDue": "2026-07-20",
       "groundingStatus": {
         "isGrounded": false,
-        "currentRecord": {
-          "id": "mfqsh8qea14hv0pk4",
-          "aircraftId": "ac-ACA",
-          "isGrounded": false,
-          "groundingDate": "2025-09-19",
-          "reason": "Maintenance",
-          "description": "200hr check",
-          "planOfAction": "Maintaining",
-          "sparePartsRequired": false,
-          "spareStatus": "Not Required",
-          "spareOrderDate": "",
-          "spareExpectedDate": "",
-          "estimatedUngroundingDate": "2025-09-19",
-          "daysOnGround": 0,
-          "createdAt": "2025-09-19T12:01:38.362Z",
-          "updatedAt": "2025-09-19T12:01:44.567Z",
-          "ungroundingDate": "2025-09-19"
-        },
         "totalDaysGrounded": 0,
-        "lastGroundedDate": "2025-09-19",
-        "lastUngroundedDate": "2025-09-19"
+        "lastGroundedDate": "2025-09-24",
+        "lastUngroundedDate": "2025-09-24"
       },
       "fireExtinguisherLastDone": "2025-09-19",
       "fireExtinguisherNextDue": "2026-09-18",
@@ -2184,5 +2166,64 @@
       "createdAt": "2025-09-18T11:27:49.956Z",
       "updatedAt": "2025-09-18T11:27:49.956Z"
     }
-  ]
+  ],
+  "groundingRecords": [
+    {
+      "id": "mfy1zd9yjusa21vdk",
+      "aircraftId": "ac-ACA",
+      "isGrounded": false,
+      "groundingDate": "2025-09-24",
+      "reason": "Maintenance",
+      "description": "",
+      "planOfAction": "",
+      "sparePartsRequired": false,
+      "spareStatus": "Not Required",
+      "spareOrderDate": "",
+      "spareExpectedDate": "",
+      "estimatedUngroundingDate": "2025-09-24",
+      "daysOnGround": 0,
+      "createdAt": "2025-09-24T14:02:04.551Z",
+      "updatedAt": "2025-09-24T14:02:18.810Z",
+      "spareReceivedDate": "",
+      "ungroundingDate": "2025-09-24"
+    },
+    {
+      "id": "mfy20807jv43e3mu41k",
+      "aircraftId": "ac-ACA",
+      "isGrounded": false,
+      "groundingDate": "2025-09-24",
+      "reason": "Maintenance",
+      "description": "",
+      "planOfAction": "",
+      "sparePartsRequired": false,
+      "spareStatus": "Not Required",
+      "spareOrderDate": "",
+      "spareExpectedDate": "",
+      "estimatedUngroundingDate": "2025-09-17",
+      "daysOnGround": 0,
+      "createdAt": "2025-09-24T14:02:44.442Z",
+      "updatedAt": "2025-09-24T14:02:47.582Z",
+      "ungroundingDate": "2025-09-24"
+    },
+    {
+      "id": "mfy2awde51g9dikxviy",
+      "aircraftId": "ac-ACA",
+      "isGrounded": false,
+      "groundingDate": "2025-09-24",
+      "reason": "Maintenance",
+      "description": "",
+      "planOfAction": "",
+      "sparePartsRequired": false,
+      "spareStatus": "Not Required",
+      "spareOrderDate": "",
+      "spareExpectedDate": "",
+      "estimatedUngroundingDate": "2025-09-24",
+      "daysOnGround": 0,
+      "createdAt": "2025-09-24T14:11:02.597Z",
+      "updatedAt": "2025-09-24T14:11:15.633Z",
+      "spareReceivedDate": "",
+      "ungroundingDate": "2025-09-24"
+    }
+  ],
+  "lastUpdated": "2025-09-24T14:03:30.814Z"
 }

@@ -251,6 +251,9 @@ export async function PUT(request: NextRequest) {
     if (!currentRecord) {
       console.log('PUT - No current record found, searching historical records');
       const historicalRecords = cache.groundingRecords || [];
+      console.log('PUT - Historical records count:', historicalRecords.length);
+      console.log('PUT - Looking for record ID:', recordId, 'for aircraft:', aircraftId);
+      console.log('PUT - Available historical record IDs:', historicalRecords.map((r: GroundingRecord) => ({ id: r.id, aircraftId: r.aircraftId })));
       recordToUpdate = historicalRecords.find((r: GroundingRecord) => r.id === recordId && r.aircraftId === aircraftId);
       isCurrentRecord = false;
       console.log('PUT - Historical record found:', !!recordToUpdate);
