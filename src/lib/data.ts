@@ -76,49 +76,19 @@ async function loadCacheIfAvailable() {
           console.log("Raw currentCyc value:", cacheAircraft[0].currentCyc);
         }
       } else {
-        console.warn("❌ No cache data found in Blob, trying local file...");
-        
-        // Fallback to local JSON file if Blob is not available
-        try {
-          const cachePath = path.join(process.cwd(), "public", "aca-cache.json");
-          if (fs.existsSync(cachePath)) {
-            const raw = fs.readFileSync(cachePath, "utf8");
-            const fileData = JSON.parse(raw);
-            
-            cacheAircraft = fileData.aircraft || [];
-            cacheTasks = fileData.tasks || [];
-            cacheComponents = fileData.components || [];
-            
-            lastCacheLoad = now;
-            console.log(`✅ Cache loaded from local file: ${cacheAircraft.length} aircraft, ${cacheTasks.length} tasks, ${cacheComponents.length} components`);
-          } else {
-            console.warn("❌ No local cache file found either");
-          }
-        } catch (fileError) {
-          console.error("❌ Failed to load from local file:", fileError);
-        }
+        console.warn("❌ No cache data found in Blob - using seeded data");
+        // Use seeded data if no blob data available
+        cacheAircraft = seededAircraft;
+        cacheTasks = seededTasks;
+        cacheComponents = seededComponents;
       }
     }
   } catch (e) {
     console.error("❌ Failed to load cache from Blob:", e);
-    
-    // Fallback to local JSON file on error
-    try {
-      const cachePath = path.join(process.cwd(), "public", "aca-cache.json");
-      if (fs.existsSync(cachePath)) {
-        const raw = fs.readFileSync(cachePath, "utf8");
-        const fileData = JSON.parse(raw);
-        
-        cacheAircraft = fileData.aircraft || [];
-        cacheTasks = fileData.tasks || [];
-        cacheComponents = fileData.components || [];
-        
-        lastCacheLoad = Date.now();
-        console.log(`✅ Cache loaded from local file (fallback): ${cacheAircraft.length} aircraft, ${cacheTasks.length} tasks, ${cacheComponents.length} components`);
-      }
-    } catch (fileError) {
-      console.error("❌ Failed to load from local file (fallback):", fileError);
-    }
+    // Use seeded data on error
+    cacheAircraft = seededAircraft;
+    cacheTasks = seededTasks;
+    cacheComponents = seededComponents;
   }
 }
 

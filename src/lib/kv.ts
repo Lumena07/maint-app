@@ -44,20 +44,6 @@ export async function readCache(): Promise<CacheData | null> {
     return data;
   } catch (error) {
     console.error('readCache - Error reading from Blob:', error);
-    console.log('readCache - Falling back to local file...');
-    
-    // Fallback to local file
-    try {
-      if (fs.existsSync(CACHE_FILE_PATH)) {
-        const fileContent = fs.readFileSync(CACHE_FILE_PATH, 'utf8');
-        const data = JSON.parse(fileContent);
-        console.log(`readCache - Loaded from local file with ${data.tasks?.length || 0} tasks`);
-        return data;
-      }
-    } catch (fileError) {
-      console.error('readCache - Error reading local file:', fileError);
-    }
-    
     return null;
   }
 }
